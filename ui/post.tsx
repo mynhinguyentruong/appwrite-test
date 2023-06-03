@@ -8,7 +8,7 @@ export default function Post() {
         <article className="flex max-w-xl flex-col items-start justify-between">
         {/*  Round Ava/Name and Content Comments, Likes ...  */}
             <div className="relative mt-8 flex items-center gap-x-4">
-                <UserCircleIcon alt="" className="h-10 w-10 rounded-full bg-gray-50" />
+                <UserCircleIcon  />
                 <div className="text-sm leading-6">
                     <p className="font-semibold text-gray-900">
 
