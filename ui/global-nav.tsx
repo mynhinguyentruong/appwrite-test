@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function GlobalNav() {
     return (
         <aside
-            className="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+            className="flex flex-col  h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
             <a href="#">
                 <Image className="w-auto h-6 sm:h-7" width={12} height={12} src="https://merakiui.com/images/logo.svg" alt=""/>
             </a>
