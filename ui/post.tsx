@@ -51,12 +51,12 @@ export default function Post() {
                 </div>
                 <div>
                     <div className="mb-4">
-                        <p className="mb-6">🎉{fakePost?.content_body} </p>
+                        <p className="mb-6">{fakePost?.content_body} </p>
                         <p className="mb-4">Enable/disable modules, focus and group-hover variants, new utilities,
                             and more.</p>
                         <p className="mb-4">Learn more in our upgrade guide:</p>
                         <p className="mb-6"><a href="#" className="text-teal">github.com/tailwind/ta...</a></p>
-                        <p><a href="#"><Image width={30} height={30} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_tweet3.jpg"
+                        <p><a href="#"><Image width={120} height={120} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_tweet3.jpg"
                                               alt="tweet image"
                                               className="border border-solid border-grey-light rounded-sm"/></a></p>
                     </div>
