@@ -229,8 +229,9 @@ export default function UiExampleTwo () {
                 <a href="#" className="mr-6 text-teal no-underline hover:underline">Tweets &amp; Replies</a>
                 <a href="#" className="text-teal no-underline hover:underline">Media</a>
             </div>
-
-            <Post />
+            {posts && posts.map(post => (
+                <Post key={post.$id} post={post}/>
+            ))}
 
             <div className="flex border-b border-solid border-grey-light">
                 <div className="w-1/8 text-right pl-3 pt-3">
