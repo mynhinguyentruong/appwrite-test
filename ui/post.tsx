@@ -12,14 +12,12 @@ interface PostProps extends Models.Document {
     image_url?: string[],
     likes: number
 }
-interface Owner extends Models.Document {}
 
 
-export default function Post({post}: {post: PostProps}) {
-    // TODO: query userid for a particular to get user image
 
+export default function Post({post}: {post: Models.Document}) {
 
-    const [owner, setOwner] = useState<Owner|{}>({})
+    const [owner, setOwner] = useState<Models.Document | null>(null)
 
     useEffect(() => {
         const { user_id } = post
@@ -63,7 +61,7 @@ export default function Post({post}: {post: PostProps}) {
                        {/*Might want to loop through each \n*/}
                        {/* Currently image is not rendered correctly, need to find alter way*/}
                         <div className="flex">
-                        {post?.image_url && post?.image_url.map((url, index) => (
+                        {post?.image_url && post?.image_url.map((url: string, index: number) => (
                             <p key={index}><a href={url}><Image width={120} height={120} src={url}
                                                   alt="tweet image"
                                                   className="border border-solid border-grey-light rounded-sm"/></a></p>

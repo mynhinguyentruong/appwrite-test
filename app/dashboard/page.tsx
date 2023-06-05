@@ -40,6 +40,7 @@ export default function Page({params}: {params: IParams} ) {
                     console.log("Error when update URL SESSION")
                     console.log("Possible error was thrown when appwrite trying to inject session cookie into the browser but browser block 3rd party cookie")
                     console.log(error)
+                    // doing this to prevent redirecting when browser reject 3rd party cookie injecting evenif user is authenticated
                     if (!isAuthenticated) {
                         router.push('/login')
                     }

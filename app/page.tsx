@@ -30,14 +30,15 @@ export default function Home() {
                 .then(res => console.log(res))
                 .catch(err => console.log(err))
 
-            const promise = account.get()
-            promise
-                .then(response => {
-                    console.log("Active Session Found")
-                    console.log(`Current userId: ${response.$id}`)
-                })
-                .catch(error => console.log(error))
+
         }
+        const promise = account.get()
+        promise
+            .then(response => {
+                console.log("Active Session Found")
+                console.log(`Current userId: ${response.$id}`)
+            })
+            .catch(error => console.log(error))
 
     }, [])
 

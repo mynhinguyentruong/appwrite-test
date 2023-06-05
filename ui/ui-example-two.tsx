@@ -1,9 +1,9 @@
 'use client';
 
 import Image from "next/image";
-import {useEffect, useState} from "react";
+import {useEffect, useState, ChangeEvent, FormEvent} from "react";
 import {account, databases} from "#/lib/appwriteConfig";
-import {ID, Permission, Role, Query } from "appwrite";
+import {ID, Permission, Role, Query, Models} from "appwrite";
 import Post from "#/ui/post";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,23 +12,23 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function UiExampleTwo () {
 
 
-    const [selectedImages, setSelectedImages] = useState([])
-    const [imageUrl, setImageUrl] = useState([])
+    const [selectedImages, setSelectedImages] = useState<FileList | null>(null)
+    const [imageUrl, setImageUrl] = useState<string[] | []>([])
     const [content, setContent] = useState("")
-    const [user, setUser] = useState({})
-    const [posts, setPosts] = useState([])
+    const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null)
+    const [posts, setPosts] = useState<Models.Document[] | null>(null)
 
-    function fileChanges(e) {
+    function fileChanges(e: ChangeEvent<HTMLInputElement>) {
         setSelectedImages(e.target.files)
 
     }
 
-    function contentChanges(e) {
+    function contentChanges(e: ChangeEvent<HTMLTextAreaElement>) {
         setContent(e.target.value)
         console.log(e.target.value)
     }
 
-    function handleSubmit(e) {
+    function handleSubmit(e: FormEvent<HTMLFormElement>) {
         // get current logged in userid
         e.preventDefault()
 
@@ -72,7 +72,7 @@ export default function UiExampleTwo () {
     }, [])
 
     useEffect(() => {
-        if (selectedImages.length > 0) {
+        if (selectedImages) {
             const arr = []
             for (const image of selectedImages) {
                 const url = URL.createObjectURL(image)
