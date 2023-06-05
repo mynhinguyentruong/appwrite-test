@@ -4,6 +4,8 @@ import { Switch } from '@headlessui/react'
 
 import { ID } from "appwrite";
 import { account } from "#/lib/appwriteConfig";
+import {useGetCurrentUser} from "#/hooks/useGetCurrentUser";
+import {useRouter} from "next/navigation";
 
 function classNames(...classes: string[])  {
     return classes.filter(Boolean).join(' ')
@@ -12,12 +14,19 @@ function classNames(...classes: string[])  {
 export default function Page() {
     const [agreed, setAgreed] = useState(false)
 
+    const user = useGetCurrentUser()
+    const router = useRouter()
+
+    if (user) {
+        router.push('/dashboard')
+    }
+
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         const formData = new FormData(e.target as HTMLFormElement)
         const email = formData.get("email")
         console.log({email})
-        const url = "https://appwrite-test-nhi-ymihn.vercel.app/dashboard"
+        const url = "http://localhost:3000/dashboard"
 
 
         if (typeof email === "string") {
@@ -102,7 +111,7 @@ export default function Page() {
                         type="submit"
                         className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                        Let&apos; s talk
+                        Let&apos;s talk
                     </button>
                 </div>
             </form>
