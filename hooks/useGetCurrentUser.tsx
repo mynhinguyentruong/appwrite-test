@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 // Performance ?
 export function useGetCurrentUser() {
     const [currentUser, setCurrentUser] = useState<Models.User<Models.Preferences> | undefined>(undefined)
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+
     useEffect(() => {
         const promise = account.get()
 

@@ -8,14 +8,13 @@ export default function Page() {
     const router = useRouter()
     const user =  useGetCurrentUser()
 
-    if (user) {
-        return router.push('/dashboard')
-    }
-
-
+    // if (user) {
+    //     return router.push('/dashboard')
+    // }
 
     return (
-        <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+        user ? router.push('/dashboard') :
+        (<div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
             <div
                 className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
                 aria-hidden="true"
@@ -34,6 +33,6 @@ export default function Page() {
             </div>
             <UserAuthForm/>
 
-        </div>
+        </div>)
     )
 }

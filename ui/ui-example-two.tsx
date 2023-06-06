@@ -7,6 +7,7 @@ import {ID, Permission, Role, Query, Models} from "appwrite";
 import Post from "#/ui/post";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DashboardLeftBar from "#/ui/dashboard-left-bar";
 
 
 export default function UiExampleTwo () {
@@ -152,48 +153,10 @@ export default function UiExampleTwo () {
     </div>
 
     <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-        <div className="w-full lg:w-1/4 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
-            <h1><a href="#" className="text-black font-bold no-underline hover:underline">St. Clair</a></h1>
-            <div className="mb-4"><a href="#" className="text-grey-darker no-underline hover:underline">@rosehillpark</a>
-            </div>
-
-            <div className="mb-4">
-                Community Description <a href="#"
-                                                                              className="text-teal no-underline hover:underline">@adamwathan</a>, <a
-                href="#" className="text-teal no-underline hover:underline">@reinink</a>, <a href="#"
-                                                                                             className="text-teal no-underline hover:underline">@davidhemphill</a>,
-                and <a href="#" className="text-teal no-underline hover:underline">@steveschoger</a>.
-            </div>
-
-            <div className="mb-2"><i className="fa fa-link fa-lg text-grey-darker mr-1"></i><a href="#"
-                                                                                               className="text-teal no-underline hover:underline">tailwindcss.com</a>
-            </div>
-            <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#"
-                                                                                                   className="text-teal no-underline hover:underline">Joined
-                August 2017</a></div>
-
-            <div className="mb-4">
-                <button
-                    className="bg-teal hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full w-full h-10">Tweet
-                    to Tailwind CSS
-                </button>
-            </div>
-
-            <div className="mb-4"><i className="fa fa-user fa-lg text-grey-dark mr-1"></i><a href="#"
-                                                                                             className="text-teal no-underline hover:underline">27
-                Followers you know</a></div>
+        <DashboardLeftBar/>
 
 
-
-            <div className="mb-4"><i className="fa fa-picture-o fa-lg text-grey-dark mr-1"></i><a href="#"
-                                                                                                  className="text-teal">Photos
-                and videos</a></div>
-
-
-        </div>
-
-
-        <div className="w-full lg:w-1/2 bg-white mb-4">
+        <div className="w-full lg:w-1/2 bg-white mb-4 ">
             <div className="w-7/8 p-3 pl-0 bg-gray-100">
 
                             <div className="mb-4">
@@ -207,27 +170,37 @@ export default function UiExampleTwo () {
                                        onChange={contentChanges}
                                        id="content_body"
                                        className="w-full border-none bg-gray-100 " />
-                                   <div className="flex">
+                                   <div className="flex rounded-md ">
                                    {imageUrl && imageUrl.map(url => (
-                                       <div key={url}>
-                                      <Image src={url} alt={"Uploaded images"} width={50} height={50} />
+                                       <div key={url} className="mr-3 rounded rounded-md">
+                                      <Image src={url} alt={"Uploaded images"} width={100} height={100} />
                                        </div>
                                    ))}
                                    </div>
                                    <input type="file" id="file" name="file" multiple accept="image/*"
-                                          onChange={fileChanges}
+                                          onChange={fileChanges} hidden
                                    />
-                                   <button>Submit</button>
-
+                                   <div className="flex justify-between rounded-md mt-3">
+                                   <label htmlFor="file">
+                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:cursor-pointer">
+                                           <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                       </svg>
+                                   </label>
+                                   <button type="submit"
+                                   >
+                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                       </svg>
+                                   </button>
+                                   </div>
                                </form>
 
                             </div>
 
             </div>
-            <div className="p-3 text-lg font-bold border-b border-solid border-grey-light">
-                <a href="#" className="text-black mr-6 no-underline hover-underline">Tweets</a>
-                <a href="#" className="mr-6 text-teal no-underline hover:underline">Tweets &amp; Replies</a>
-                <a href="#" className="text-teal no-underline hover:underline">Media</a>
+            <div className="flex justify-around p-3 text-lg font-bold border-b border-solid border-grey-light">
+                <a href="#" className="text-black mr-6 no-underline hover:underline ">For you</a>
+                <a href="#" className="mr-6 text-teal no-underline hover:underline">Following</a>
             </div>
             {posts && posts.map(post => (
                 <Post key={post.$id} post={post}/>
@@ -335,60 +308,10 @@ export default function UiExampleTwo () {
                                 className="fa fa-envelope fa-lg mr-2"></i></a></span>
                         </div>
 
-                        <div><a href="#" className="text-teal">Show this thread</a></div>
                     </div>
                 </div>
             </div>
 
-            <div className="flex border-b border-solid border-grey-light">
-
-                <div className="w-1/8 text-right pl-3 pt-3">
-                    <div><a href="#"><Image width={30} height={30}
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_avatar_tailwind.jpg" alt="avatar"
-                        className="rounded-full h-12 w-12 mr-2"/></a></div>
-                </div>
-
-                <div className="w-7/8 p-3 pl-0">
-                    <div className="flex justify-between">
-                        <div>
-                            <span className="font-bold"><a href="#" className="text-black">Tailwind CSS</a></span>
-                            <span className="text-grey-dark">@tailwindcss</span>
-                            <span className="text-grey-dark">&middot;</span>
-                            <span className="text-grey-dark">1 Dec 2017</span>
-                        </div>
-                        <div>
-                            <a href="#" className="text-grey-dark hover:text-teal"><i
-                                className="fa fa-chevron-down"></i></a>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="mb-4">
-                            <p className="mb-6">🎉 Tailwind CSS v0.3.0 is here!</p>
-                            <p className="mb-4">Enable/disable modules, focus and group-hover variants, new utilities,
-                                and more.</p>
-                            <p className="mb-4">Learn more in our upgrade guide:</p>
-                            <p className="mb-6"><a href="#" className="text-teal">github.com/tailwind/ta...</a></p>
-                            <p><a href="#"><Image width={30} height={30} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_tweet3.jpg"
-                                                alt="tweet image"
-                                                className="border border-solid border-grey-light rounded-sm"/></a></p>
-                        </div>
-                        <div className="pb-2">
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-blue-light"><i
-                                className="fa fa-comment fa-lg mr-2"></i> 6</a></span>
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-green"><i
-                                className="fa fa-retweet fa-lg mr-2"></i> 74</a></span>
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-red"><i
-                                className="fa fa-heart fa-lg mr-2"></i> 206</a></span>
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-teal"><i
-                                className="fa fa-envelope fa-lg mr-2"></i></a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div className="flex border-b border-solid border-grey-light">
 
@@ -454,121 +377,11 @@ export default function UiExampleTwo () {
             </div>
         </div>
 
-        <div className="w-full lg:w-1/4 pl-4">
-            <div className="bg-white p-3 mb-3">
-                <div>
-                    <span className="text-lg font-bold">Who to follow</span>
-                    <span>&middot;</span>
-                    <span><a href="#" className="text-teal text-xs">Refresh</a></span>
-                    <span>&middot;</span>
-                    <span><a href="#" className="text-teal text-xs">View All</a></span>
-                </div>
-
-                <div className="flex border-b border-solid border-grey-light">
-                    <div className="py-2">
-                        <a href="#"><Image width={30} height={30} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow1.jpg"
-                                         alt="follow1" className="rounded-full h-12 w-12"/></a>
-                    </div>
-                    <div className="pl-2 py-2 w-full">
-                        <div className="flex justify-between mb-1">
-                            <div>
-                                <a href="#" className="font-bold text-black">Nuxt.js</a> <a href="#"
-                                                                                            className="text-grey-dark">@nuxt_js</a>
-                            </div>
-
-                            <div>
-                                <a href="#" className="text-grey hover:text-grey-dark"><i
-                                    className="fa fa-times"></i></a>
-                            </div>
-                        </div>
-                        <div>
-                            <button
-                                className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                                Follow
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex border-b border-solid border-grey-light">
-                    <div className="py-2">
-                        <a href="#"><Image width={30} height={30} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow2.jpg"
-                                         alt="follow1" className="rounded-full h-12 w-12"/></a>
-                    </div>
-                    <div className="pl-2 py-2 w-full">
-                        <div className="flex justify-between mb-1">
-                            <div>
-                                <a href="#" className="font-bold text-black">Laracon EU</a> <a href="#"
-                                                                                               className="text-grey-dark">@LaraconEU</a>
-                            </div>
-
-                            <div>
-                                <a href="#" className="text-grey hover:text-grey-dark"><i
-                                    className="fa fa-times"></i></a>
-                            </div>
-                        </div>
-                        <div>
-                            <button
-                                className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                                Follow
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex border-b border-solid border-grey-light">
-                    <div className="py-2">
-                        <a href="#"><Image width={30} height={30} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_follow3.jpg"
-                                         alt="follow1" className="rounded-full h-12 w-12"/></a>
-                    </div>
-                    <div className="pl-2 py-2 w-full">
-                        <div className="flex justify-between mb-1">
-                            <div>
-                                <a href="#" className="font-bold text-black">Laracon US</a> <a href="#"
-                                                                                               className="text-grey-dark">@LaraconUS</a>
-                            </div>
-
-                            <div>
-                                <a href="#" className="text-grey hover:text-grey-dark"><i
-                                    className="fa fa-times"></i></a>
-                            </div>
-                        </div>
-                        <div>
-                            <button
-                                className="bg-transparent text-xs hover:bg-teal text-teal font-semibold hover:text-white py-2 px-6 border border-teal hover:border-transparent rounded-full">
-                                Follow
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex border-b border-solid border-grey-light">
-                    <div className="py-4">
-                        <a href="#" className=" p-1"><Image width={30} height={30}
-                            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_outlook.png" alt="follow1"
-                            className="rounded h-6 w-6"/></a>
-                    </div>
-                    <div className="pl-2 py-2 w-full">
-                        <div className="flex justify-between">
-                            <div>
-                                <a href="#" className="font-bold text-black">Find people you know</a>
-                            </div>
-                        </div>
-                        <div className="text-xs">
-                            Import your contacts from Outlook
-                        </div>
-                    </div>
-                </div>
-
-                <div className="pt-2">
-                    <a href="#" className="text-teal text-xs">Connect other address book</a>
-                </div>
-            </div>
+        <div className="w-full lg:w-1/4 pl-4 ">
 
             <div className="bg-white p-3 mb-3">
                 <div className="mb-3">
                     <span className="text-lg font-bold">Trends for you</span>
-                    <span>&middot;</span>
-                    <span><a href="#" className="text-teal text-xs">Change</a></span>
                 </div>
 
                 <div className="mb-3 leading-tight">
@@ -604,7 +417,7 @@ export default function UiExampleTwo () {
             </div>
 
             <div className="mb-3 text-xs">
-                <span className="mr-2"><a href="#" className="text-grey-darker">&copy; 2018 Twitter</a></span>
+                <span className="mr-2"><a href="#" className="text-grey-darker">&copy; 2023 St.Clair </a></span>
                 <span className="mr-2"><a href="#" className="text-grey-darker">About</a></span>
                 <span className="mr-2"><a href="#" className="text-grey-darker">Help Center</a></span>
                 <span className="mr-2"><a href="#" className="text-grey-darker">Terms</a></span>
