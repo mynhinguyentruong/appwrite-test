@@ -34,12 +34,10 @@ export default function UiExampleTwo () {
         e.preventDefault()
 
         const data = {
-            date: new Date().toJSON().slice(0, 10),
             content_body: content,
-            image_url: imageUrl ?? null,
             user_id: user?.$id
         }
-        const promise = databases.createDocument('647b675e73a83b821ca7','647c942f2404bcddaecf',ID.unique(),data)
+        const promise = databases.createDocument('647b675e73a83b821ca7','647f52561dc3d331e6aa',ID.unique(),data)
 
         promise
             .then(res => {
@@ -114,7 +112,7 @@ export default function UiExampleTwo () {
     }, [selectedImages])
 
     useEffect(() => {
-        const promise = databases.listDocuments('647b675e73a83b821ca7', '647c942f2404bcddaecf', [
+        const promise = databases.listDocuments('647b675e73a83b821ca7', '647f52561dc3d331e6aa', [
             Query.orderDesc('$createdAt')
         ])
 

@@ -20,8 +20,8 @@ export async function POST(request: Request) {
     const res = await storage.createBucket(postId, postId, [
         Permission.create(Role.users()),
         Permission.write(Role.users()),
-        Permission.read(Role.users())
-    ])
+        Permission.read(Role.any())
+    ],true,true)
 
     return NextResponse.json({ bucketId: res.$id })
 }
