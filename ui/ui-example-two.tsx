@@ -35,7 +35,8 @@ export default function UiExampleTwo () {
 
         const data = {
             content_body: content,
-            user_id: user?.$id
+            user_id: user?.$id,
+            hasPhoto: !!selectedImages
         }
         const promise = databases.createDocument('647b675e73a83b821ca7','647f52561dc3d331e6aa',ID.unique(),data)
 

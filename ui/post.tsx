@@ -20,7 +20,7 @@ export default function Post({post}: {post: Models.Document}) {
     const [imageUrls, setImageUrls] = useState<string[] | null>(null)
 
     useEffect(() => {
-        const { user_id, $id } = post
+        const { user_id, $id, hasPhoto } = post
 
         const promise = databases.listDocuments('647b675e73a83b821ca7', '647cb553d054c55d41db',[
             Query.equal('user_id', user_id)
@@ -33,17 +33,20 @@ export default function Post({post}: {post: Models.Document}) {
                 console.log(err)
             })
 
-        const filePromise = storage.listFiles($id)
+        if (hasPhoto) {
+            const filePromise = storage.listFiles($id)
 
-        filePromise
-            .then(res => {
-                const array = res.files.map(file => `https://cloud.appwrite.io/v1/storage/buckets/${$id}/files/${file.$id}/view?project=64749ba6eade18e58a13`)
-                setImageUrls(array)
-            })
-            .catch(error => {
-                console.log(error)
-                setImageUrls(null)
-            })
+            filePromise
+                .then(res => {
+                    const array = res.files.map(file => `https://cloud.appwrite.io/v1/storage/buckets/${$id}/files/${file.$id}/view?project=64749ba6eade18e58a13`)
+                    setImageUrls(array)
+                })
+                .catch(error => {
+                    console.log(error)
+                    setImageUrls(null)
+                })
+        }
+
     },[post])
 
     return (
