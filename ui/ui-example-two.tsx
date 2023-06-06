@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import {useEffect, useState, ChangeEvent, FormEvent} from "react";
-import {account, databases} from "#/lib/appwriteConfig";
+import {account, databases, storage} from "#/lib/appwriteConfig";
 import {ID, Permission, Role, Query, Models} from "appwrite";
 import Post from "#/ui/post";
 import { ToastContainer, toast } from 'react-toastify';
@@ -55,6 +55,35 @@ export default function UiExampleTwo () {
                     progress: undefined,
                     theme: "light",
                 });
+
+                if (selectedImages) {
+                    fetch('/api/create-bucket', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            postId: res.$id
+                        })
+                    })
+                        .then(res => res.json())
+                        .then(res => {
+                            console.log({res})
+                            for (const image of selectedImages) {
+
+
+                                const promise = storage.createFile(res.bucketId, ID.unique(), image)
+
+                                promise
+                                    .then(res => {
+                                        console.log(res)
+                                        console.log("File upload success")
+                                    })
+                                    .catch(error => {
+                                        console.log(error)
+                                        console.log(`There is some error uploading file in bucket ${res.$id}`)
+                                    })
+                            }
+                        })
+
+                }
         })
             .catch(error => {
                 console.log("Fail to create new doc")
