@@ -36,13 +36,13 @@ export default function Post({post}: {post: Models.Document}) {
 
     return (
         owner && (<div className="flex border-b border-solid border-grey-light">
-            <div className="w-1/8 text-right pl-3 pt-3">
+            <div className="w-1/8 text-right pl-3 pt-3 ">
                 <div><a href="#"><Image width={30} height={30}
                                         src={owner?.user_image} alt="avatar"
-                                        className="rounded-full h-12 w-12 mr-2"/></a></div>
+                                        className="rounded-full sm:h-12 sm:w-12 mr-2"/></a></div>
             </div>
 
-            <div className="w-7/8 p-3 pl-0">
+            <div className="w-7/8 p-3 pl-0 overflow-scroll">
                 <div className="flex justify-between">
                     <div>
                         <span className="font-bold"><a href="#" className="text-black">{owner?.user_name}</a></span>
@@ -60,7 +60,7 @@ export default function Post({post}: {post: Models.Document}) {
                         <p className="mb-6">{post?.content_body} </p>
                        {/*Might want to loop through each \n*/}
                        {/* Currently image is not rendered correctly, need to find alter way*/}
-                        <div className="flex">
+                        <div className="flex overflow-scroll">
                         {post?.image_url && post?.image_url.map((url: string, index: number) => (
                             <p key={index}><a href={url}><Image width={120} height={120} src={url}
                                                   alt="tweet image"

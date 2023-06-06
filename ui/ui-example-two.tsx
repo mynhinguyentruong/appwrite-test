@@ -162,7 +162,7 @@ export default function UiExampleTwo () {
                             <div className="mb-4">
                                <form onSubmit={handleSubmit}>
                                    <textarea
-                                       rows={4}
+                                       rows={2}
                                        wrap="hard"
                                        placeholder="Nhi, What is happening?!"
                                        name="content_body"
@@ -170,9 +170,9 @@ export default function UiExampleTwo () {
                                        onChange={contentChanges}
                                        id="content_body"
                                        className="w-full border-none bg-gray-100 " />
-                                   <div className="flex rounded-md ">
+                                   <div className="flex rounded-md overflow-hidden	">
                                    {imageUrl && imageUrl.map(url => (
-                                       <div key={url} className="mr-3 rounded rounded-md">
+                                       <div key={url} className="mr-3 rounded rounded-md overflow-hidden	">
                                       <Image src={url} alt={"Uploaded images"} width={100} height={100} />
                                        </div>
                                    ))}
@@ -180,7 +180,7 @@ export default function UiExampleTwo () {
                                    <input type="file" id="file" name="file" multiple accept="image/*"
                                           onChange={fileChanges} hidden
                                    />
-                                   <div className="flex justify-between rounded-md mt-3">
+                                   <div className="flex justify-between rounded-md mt-3 mx-3">
                                    <label htmlFor="file">
                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:cursor-pointer">
                                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -206,175 +206,6 @@ export default function UiExampleTwo () {
                 <Post key={post.$id} post={post}/>
             ))}
 
-            <div className="flex border-b border-solid border-grey-light">
-                <div className="w-1/8 text-right pl-3 pt-3">
-                    <div><i className="fa fa-thumb-tack text-teal mr-2"></i></div>
-                    <div><a  href="#"><Image width={30} height={30} className="rounded-full h-12 w-12 mr-4"
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_avatar_tailwind.jpg" alt="avatar"
-                        /></a></div>
-                </div>
-                <div className="w-7/8 p-3 pl-0">
-                    <div className="text-xs text-grey-dark">Pinned Tweet</div>
-                    <div className="flex justify-between">
-                        <div>
-                            <span className="font-bold"><a href="#" className="text-black">Tailwind CSS</a></span>
-                            <span className="text-grey-dark mx-1">@tailwindcss</span>
-                            <span className="text-grey-dark mx-1">&middot;</span>
-                            <span className="text-grey-dark mx-1">15 Dec 2017</span>
-                        </div>
-                        <div>
-                            <a href="#" className="text-grey-dark hover:text-teal"><i
-                                className="fa fa-chevron-down"></i></a>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="mb-4">
-                            <p className="mb-6">🎉 Tailwind CSS v0.4.0 is out!</p>
-                            <p className="mb-6">Makes `apply` more useful when using !important utilities, and includes
-                                an improved default color palette:</p>
-                            <p className="mb-4"><a href="#" className="text-teal">github.com/tailwindcss/ta...</a></p>
-                            <p><a href="#"><Image width={30} height={30} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_tweet1.jpg"
-                                                alt="tweet image"
-                                                className="border border-solid border-grey-light rounded-sm"/></a></p>
-                        </div>
-                    </div>
-
-                    <div className="pb-2">
-                        <span className="mr-8"><a href="#"
-                                                  className="text-grey-dark hover:no-underline hover:text-blue-light"><i
-                            className="fa fa-comment fa-lg mr-2"></i> 9</a></span>
-                        <span className="mr-8"><a href="#"
-                                                  className="text-grey-dark hover:no-underline hover:text-green"><i
-                            className="fa fa-retweet fa-lg mr-2"></i> 29</a></span>
-                        <span className="mr-8"><a href="#" className="text-grey-dark hover:no-underline hover:text-red"><i
-                            className="fa fa-heart fa-lg mr-2"></i> 135</a></span>
-                        <span className="mr-8"><a href="#"
-                                                  className="text-grey-dark hover:no-underline hover:text-teal"><i
-                            className="fa fa-envelope fa-lg mr-2"></i></a></span>
-                    </div>
-                </div>
-            </div>
-
-            <div className="flex border-b border-solid border-grey-light">
-
-                <div className="w-1/8 text-right pl-3 pt-3 mr-2">
-                    <div><i className="fa fa-retweet text-grey-dark mr-2"></i></div>
-                    <div><a href="#"><Image width={30} height={30} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_avatar_adam.jpg"
-                                          alt="avatar" className="rounded-full h-12 w-12 mr-4"/></a></div>
-                </div>
-
-                <div className="w-7/8 p-3 pl-0">
-                    <div className="text-xs text-grey-dark">Tailwind CSS Retweeted</div>
-                    <div className="flex justify-between">
-                        <div>
-                            <span className="font-bold"><a href="#" className="text-black">Adam Wathan</a></span>
-                            <span className="text-grey-dark">@adamwathan</span>
-                            <span className="text-grey-dark">&middot;</span>
-                            <span className="text-grey-dark">7 Dec 2017</span>
-                        </div>
-                        <div>
-                            <a href="#" className="text-grey-dark hover:text-teal"><i
-                                className="fa fa-chevron-down"></i></a>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="mb-4">
-                            <p className="mb-6">💥 Check out this Slack clone built with <a href="#"
-                                                                                           className="text-teal">@tailwindcss</a> using
-                                no custom CSS and just the default configuration:</p>
-                            <p className="mb-4"><a href="#"
-                                                   className="text-teal">https://codepen.io/adamwathan/pen/JOQWVa...</a>
-                            </p>
-                            <p className="mb-6">(based on some work <a href="#"
-                                                                       className="text-teal">@Killgt</a> started for <a
-                                href="#" className="text-teal">tailwindcomponents.com</a> !)</p>
-                            <p><a href="#"><Image width={30} height={30} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_tweet2.jpg"
-                                                alt="tweet image"
-                                                className="border border-solid border-grey-light rounded-sm "/></a></p>
-                        </div>
-                        <div className="pb-2">
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-blue-light"><i
-                                className="fa fa-comment fa-lg mr-2"></i> 19</a></span>
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-green"><i
-                                className="fa fa-retweet fa-lg mr-2"></i> 56</a></span>
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-red"><i
-                                className="fa fa-heart fa-lg mr-2"></i> 247</a></span>
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-teal"><i
-                                className="fa fa-envelope fa-lg mr-2"></i></a></span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div className="flex border-b border-solid border-grey-light">
-
-                <div className="w-1/8 text-right pl-3 pt-3">
-                    <div><i className="fa fa-retweet text-grey-dark mr-2"></i></div>
-                    <div><a href="#"><Image width={30} height={30}
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_avatar_egghead.jpg" alt="avatar"
-                        className="rounded-full h-12 w-12 mr-2"/></a></div>
-                </div>
-
-                <div className="w-7/8 p-3 pl-0">
-                    <div className="text-xs text-grey-dark">Tailwind CSS Retweeted</div>
-                    <div className="flex justify-between">
-                        <div>
-                            <span className="font-bold"><a href="#" className="text-black">egghead.io</a></span>
-                            <span className="text-grey-dark">@eggheadio</span>
-                            <span className="text-grey-dark">&middot;</span>
-                            <span className="text-grey-dark">29 Nov 2017</span>
-                        </div>
-                        <div>
-                            <a href="#" className="text-grey-dark hover:text-teal"><i
-                                className="fa fa-chevron-down"></i></a>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="mb-4">
-                            <p className="mb-6">Create a Responsive Card Component by Composing Tailwind&apos;s Utility
-                                Classes - <a href="#" className="text-teal">#html</a> lesson by <a href="#"
-                                                                                                   className="text-teal">@simonswiss</a>
-                            </p>
-                            <div className="flex border border-solid border-grey rounded">
-                                <div className="w-1/4">
-                                    <Image width={30} height={30} src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_tweet4.jpg"
-                                         alt="image"/>
-                                </div>
-                                <div className="w-3/4 p-3">
-                                    <div className="font-bold mb-1">egghead Lesson: Abstract utility classes to ...
-                                    </div>
-                                    <p className="mb-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                        Temporibus voluptate tempore itaque culpa hic qui nostrum, minus harum
-                                        cupiditate a voluptatibus.</p>
-                                        <div className="text-grey-dark">egghead.io</div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div className="pb-2">
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-blue-light"><i
-                                className="fa fa-comment fa-lg mr-2"></i> 2</a></span>
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-green"><i
-                                className="fa fa-retweet fa-lg mr-2"></i> 8</a></span>
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-red"><i
-                                className="fa fa-heart fa-lg mr-2"></i> 24</a></span>
-                            <span className="mr-8"><a href="#"
-                                                      className="text-grey-dark hover:no-underline hover:text-teal"><i
-                                className="fa fa-envelope fa-lg mr-2"></i></a></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div className="w-full lg:w-1/4 pl-4 ">
