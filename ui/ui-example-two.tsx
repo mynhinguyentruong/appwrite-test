@@ -18,6 +18,7 @@ export default function UiExampleTwo () {
     const [content, setContent] = useState("")
     const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null)
     const [posts, setPosts] = useState<Models.Document[] | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     function fileChanges(e: ChangeEvent<HTMLInputElement>) {
         setSelectedImages(e.target.files)
@@ -32,7 +33,7 @@ export default function UiExampleTwo () {
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         // get current logged in userid
         e.preventDefault()
-
+        setIsLoading(true)
         const data = {
             content_body: content,
             user_id: user?.$id,
@@ -44,6 +45,7 @@ export default function UiExampleTwo () {
             .then(res => {
                 console.log("Success add doc")
                 console.log(res)
+                setIsLoading(false)
                 toast('Post sent successfully ', {
                     position: "top-center",
                     autoClose: 5000,
@@ -54,7 +56,7 @@ export default function UiExampleTwo () {
                     progress: undefined,
                     theme: "light",
                 });
-
+                setContent("")
                 if (selectedImages) {
                     fetch('/api/create-bucket', {
                         method: 'POST',
@@ -74,6 +76,7 @@ export default function UiExampleTwo () {
                                     .then(res => {
                                         console.log(res)
                                         console.log("File upload success")
+                                        setSelectedImages(null)
                                     })
                                     .catch(error => {
                                         console.log(error)
@@ -126,16 +129,12 @@ export default function UiExampleTwo () {
                 console.log("Failed to get post")
                 console.log(error)
             })
-    }, [])
+    }, [isLoading])
 
     return (
         <>
         <div className="bg-white">
-            <ToastContainer
-
-            />
-
-
+            <ToastContainer/>
             <div className="container mx-auto flex flex-col lg:flex-row items-center py-4">
                 <nav className="w-full lg:w-2/5 " >
                     <a href="#"
@@ -192,7 +191,7 @@ export default function UiExampleTwo () {
                                    <textarea
                                        rows={2}
                                        wrap="hard"
-                                       placeholder="Nhi, What is happening?!"
+                                       placeholder="What is happening?!"
                                        name="content_body"
                                        value={content}
                                        onChange={contentChanges}
@@ -231,7 +230,7 @@ export default function UiExampleTwo () {
                 <a href="#" className="mr-6 text-teal no-underline hover:underline">Following</a>
             </div>
             {posts && posts.map(post => (
-                <Post key={post.$id} post={post}/>
+                <Post key={post.$id} post={post} />
             ))}
 
         </div>

@@ -14,7 +14,7 @@ interface PostProps extends Models.Document {
 
 
 
-export default function Post({post}: {post: Models.Document}) {
+export default function Post({post, }: {post: Models.Document, }) {
 
     const [owner, setOwner] = useState<Models.Document | null>(null)
     const [imageUrls, setImageUrls] = useState<string[] | null>(null)
@@ -32,7 +32,8 @@ export default function Post({post}: {post: Models.Document}) {
                 console.log("Unable to get owner for this post")
                 console.log(err)
             })
-
+        console.log("useeffect run")
+        console.log({hasPhoto})
         if (hasPhoto) {
             const filePromise = storage.listFiles($id)
 
@@ -43,7 +44,6 @@ export default function Post({post}: {post: Models.Document}) {
                 })
                 .catch(error => {
                     console.log(error)
-                    setImageUrls(null)
                 })
         }
 
