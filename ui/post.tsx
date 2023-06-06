@@ -75,10 +75,10 @@ export default function Post({post}: {post: Models.Document}) {
                            {/* Currently image is not rendered correctly, need to find alter way*/}
                             <div className="mt-1 grid grid-cols-2 gap-1 rounded-3xl overflow-scroll max-h-96">
                             {imageUrls && imageUrls?.map((url: string, index: number) => (
-                                <div className='overflow-hidden'>
+                                <div key={index} className='overflow-scroll h-36'>
                                <Image src={url} width={500} height={500}
                                                       alt="tweet image"
-                                                      className="border border-solid border-grey-light rounded-sm object-cover"/>
+                                                      className="border border-solid border-grey-light rounded-sm object-cover object-center"/>
                                 </div>
                             ))}
                             </div>
