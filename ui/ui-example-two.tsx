@@ -230,7 +230,7 @@ export default function UiExampleTwo () {
                 <a href="#" className="mr-6 text-teal no-underline hover:underline">Following</a>
             </div>
             {posts && posts.map(post => (
-                <Post key={post.$id} post={post} />
+                <Post key={post.$id} post={post} user={user} />
             ))}
 
         </div>
