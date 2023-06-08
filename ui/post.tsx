@@ -78,7 +78,7 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                     </div>
                     <div>
                         <div className="mb-6 w-full mt-2">
-                            {JSON.parse(post?.content_body).split("\n").map((line: string, index: number) => (<p key={index} className="mb-6">{line} </p>))}
+                            {JSON.parse(post?.content_body).split("\n").map((line: string, index: number) => (<p key={index} className="mb-2">{line} </p>))}
                             
                            {/*Might want to loop through each \n*/}
                            {/* Currently image is not rendered correctly, need to find alter way*/}
