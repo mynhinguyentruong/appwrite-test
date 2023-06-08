@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardLeftBar from "#/ui/dashboard-left-bar";
 
+// once new post submitted, f
 
 export default function UiExampleTwo () {
 
@@ -17,7 +18,7 @@ export default function UiExampleTwo () {
     const [imageUrl, setImageUrl] = useState<string[] | []>([])
     const [content, setContent] = useState("")
     const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null)
-    const [posts, setPosts] = useState<Models.Document[] | null>(null)
+    const [posts, setPosts] = useState<Models.Document[] | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [urls, setUrls] = useState<string[] | null>(null)
 
@@ -77,9 +78,12 @@ export default function UiExampleTwo () {
                                 promise
                                     .then(file => {
                                         console.log(file)
-                                        urls.push(`https://cloud.appwrite.io/v1/storage/buckets/${bucket.bucketId}/files/${file.$id}/view?project=64749ba6eade18e58a13`)
                                         console.log("File upload success")
-                                        setSelectedImages(null)
+                                        setPosts((prevPosts: Models.Document[] | undefined) => {
+                                            return prevPosts?.map(prevPost => {
+                                                return prevPost.$id === bucket.bucketId ? {...prevPost, image_url: [...prevPost.image_url, `https://cloud.appwrite.io/v1/storage/buckets/${bucket.bucketId}/files/${file.$id}/view?project=64749ba6eade18e58a13`]} : prevPost
+                                            })
+                                        })
                                     })
                                     .catch(error => {
                                         console.log(error)
