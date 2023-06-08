@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardLeftBar from "#/ui/dashboard-left-bar";
 
-// once new post submitted, f
+// once new post submitted -> new bucket get created -> file uploaded to that bucket -> update posts state in this component with the url
 
 export default function UiExampleTwo () {
 
@@ -20,7 +20,31 @@ export default function UiExampleTwo () {
     const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null)
     const [posts, setPosts] = useState<Models.Document[] | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [urls, setUrls] = useState<string[] | null>(null)
+
+    async function likePost(postId: string, userId: string | undefined) {
+        if (!userId) return;
+        setPosts((prevPosts: Models.Document[] | undefined) => {
+            return prevPosts?.map(prevPost => {
+                if (prevPost.$id === postId) {
+                    if (prevPost.likes.some((id: string) => id === userId)) {
+                        const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, postId, {
+                            likes: prevPost.likes.filter((userId: string) => userId !== user?.$id)
+                        })
+            
+                        promise.then(res => console.log("doc updated")).catch(err => console.log("error update likes attr"))
+                        return {...prevPost, likes: prevPost.likes.filter((id: string) => id !== userId)}
+                    } else {
+                        const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, postId, {
+                            likes: [...prevPost.likes, userId]
+                        })
+                        return {...prevPost, likes: [...prevPost.likes, userId]}
+                    }
+                } else {
+                    return prevPost
+                }
+            })
+        })
+    }
 
     function fileChanges(e: ChangeEvent<HTMLInputElement>) {
         setSelectedImages(e.target.files)
@@ -247,7 +271,7 @@ export default function UiExampleTwo () {
                 <a href="#" className="mr-6 text-teal no-underline hover:underline">Following</a>
             </div>
             {posts && posts.map(post => (
-                <Post key={post.$id} post={post} user={user} />
+                <Post key={post.$id} post={post} user={user} likePost={likePost} />
             ))}
 
         </div>

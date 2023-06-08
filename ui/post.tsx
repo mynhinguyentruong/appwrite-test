@@ -12,36 +12,38 @@ interface PostProps extends Models.Document {
     likes: number
 }
 
+type LikePostFn = (postId: string, userId: string | null) => Promise<void>
+
 if (!process.env.NEXT_PUBLIC_DATABASE_ID) throw new Error("Provide NEXT_PUBLIC_DATABASE_ID ENV")
 if (!process.env.NEXT_PUBLIC_POST_COLLECTION_ID) throw new Error ("Provide NEXT_PUBLIC_POST_COLLECTION_ID")
 
 
 
-export default function Post({post, user}: {post: Models.Document, user: Models.User<Models.Preferences> | null}) {
+export default function Post({post, user, likePost}: {post: Models.Document, user: Models.User<Models.Preferences> | null, likePost: LikePostFn}) {
 
     const [owner, setOwner] = useState<Models.Document | null>(null)
     const [imageUrls, setImageUrls] = useState<string[] | null>(null)
 
-    const likePost = async () => {
-        const isAlreadyLiked = post.likes.some((userId: string) => userId === user?.$id)
-        if (isAlreadyLiked) {
-            // remove the userId from the likes array
-            const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
-                likes: post.likes.filter((userId: string) => userId !== user?.$id)
-            })
+    // const likePost = async () => {
+    //     const isAlreadyLiked = post.likes.some((userId: string) => userId === user?.$id)
+    //     if (isAlreadyLiked) {
+    //         // remove the userId from the likes array
+    //         const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
+    //             likes: post.likes.filter((userId: string) => userId !== user?.$id)
+    //         })
 
-            promise.then(res => console.log("doc updated")).catch(err => console.log("error update likes attr"))
-        }
+    //         promise.then(res => console.log("doc updated")).catch(err => console.log("error update likes attr"))
+    //     }
 
-        if (!isAlreadyLiked) {
-            // add the userId
-            const currentLikes = [...post.likes]
-            currentLikes.push(user?.$id)
-            const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
-                likes: currentLikes
-            })
-        }
-    }
+    //     if (!isAlreadyLiked) {
+    //         // add the userId
+    //         const currentLikes = [...post.likes]
+    //         currentLikes.push(user?.$id)
+    //         const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
+    //             likes: currentLikes
+    //         })
+    //     }
+    // }
 
     useEffect(() => {
         const { user_id, hasPhoto, $id } = post
@@ -117,7 +119,7 @@ export default function Post({post, user}: {post: Models.Document, user: Models.
                         </div>
                         <div className="pb-2 flex">
                             <span className="mr-8 flex hover:cursor-pointer"
-                                  onClick={likePost}>
+                                  onClick={() => likePost(post.$id, user?.$id)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
       <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                                 </svg>
