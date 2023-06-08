@@ -19,6 +19,7 @@ export default function UiExampleTwo () {
     const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null)
     const [posts, setPosts] = useState<Models.Document[] | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [urls, setUrls] = useState<string[] | null>(null)
 
     function fileChanges(e: ChangeEvent<HTMLInputElement>) {
         setSelectedImages(e.target.files)
@@ -42,9 +43,9 @@ export default function UiExampleTwo () {
         const promise = databases.createDocument('647b675e73a83b821ca7','647f52561dc3d331e6aa',ID.unique(),data)
 
         promise
-            .then(res => {
+            .then(post => {
                 console.log("Success add doc")
-                console.log(res)
+                console.log(post)
                 setIsLoading(false)
                 toast('Post sent successfully ', {
                     position: "top-center",
@@ -61,28 +62,40 @@ export default function UiExampleTwo () {
                     fetch('/api/create-bucket', {
                         method: 'POST',
                         body: JSON.stringify({
-                            postId: res.$id
+                            postId: post.$id
                         })
                     })
                         .then(res => res.json())
-                        .then(res => {
-                            console.log({res})
+                        .then(bucket => {
+                            console.log({bucket})
+                            const urls: string[] = []
                             for (const image of selectedImages) {
 
 
-                                const promise = storage.createFile(res.bucketId, ID.unique(), image)
+                                const promise = storage.createFile(bucket.bucketId, ID.unique(), image)
 
                                 promise
-                                    .then(res => {
-                                        console.log(res)
+                                    .then(file => {
+                                        console.log(file)
+                                        urls.push(`https://cloud.appwrite.io/v1/storage/buckets/${bucket.bucketId}/files/${file.$id}/view?project=64749ba6eade18e58a13`)
                                         console.log("File upload success")
                                         setSelectedImages(null)
                                     })
                                     .catch(error => {
                                         console.log(error)
-                                        console.log(`There is some error uploading file in bucket ${res.$id}`)
+                                        console.log(`There is some error uploading file in bucket ${bucket.bucketId}`)
                                     })
                             }
+                            // update post with the url
+                            const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
+                                image_url: urls
+                            })
+
+                            promise.then(res => {
+                                console.log("update url in post success")
+                            }).catch(err => {
+                                console.log("could not update url in post")
+                            })
                         })
 
                 }

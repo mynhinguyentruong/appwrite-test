@@ -12,19 +12,22 @@ interface PostProps extends Models.Document {
     likes: number
 }
 
+if (!process.env.NEXT_PUBLIC_DATABASE_ID) throw new Error("Provide NEXT_PUBLIC_DATABASE_ID ENV")
+if (!process.env.NEXT_PUBLIC_POST_COLLECTION_ID) throw new Error ("Provide NEXT_PUBLIC_POST_COLLECTION_ID")
 
 
-export default function Post({post, user}: {post: Models.Document, }) {
+
+export default function Post({post, user}: {post: Models.Document, user: Models.User<Models.Preferences> | null}) {
 
     const [owner, setOwner] = useState<Models.Document | null>(null)
-    const [imageUrls, setImageUrls] = useState<string[] | null>(null)
+    // const [imageUrls, setImageUrls] = useState<string[] | null>(null)
 
     const likePost = async () => {
-        const isAlreadyLiked = post.likes.some(userId => userId === user.$id)
+        const isAlreadyLiked = post.likes.some((userId: string) => userId === user?.$id)
         if (isAlreadyLiked) {
             // remove the userId from the likes array
-            const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID, process.env.NEXT_PUBLIC_POST_COLLECTION_ID, post.$id, {
-                likes: post.likes.filter(userId => userId !== user.$id)
+            const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
+                likes: post.likes.filter((userId: string) => userId !== user?.$id)
             })
 
             promise.then(res => console.log("doc updated")).catch(err => console.log("error update likes attr"))
@@ -33,15 +36,15 @@ export default function Post({post, user}: {post: Models.Document, }) {
         if (!isAlreadyLiked) {
             // add the userId
             const currentLikes = [...post.likes]
-            currentLikes.push(user.$id)
-            const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID, process.env.NEXT_PUBLIC_POST_COLLECTION_ID, post.$id, {
+            currentLikes.push(user?.$id)
+            const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
                 likes: currentLikes
             })
         }
     }
 
     useEffect(() => {
-        const { user_id, $id, hasPhoto } = post
+        const { user_id,  } = post
 
         const promise = databases.listDocuments('647b675e73a83b821ca7', '647cb553d054c55d41db',[
             Query.equal('user_id', user_id)
@@ -54,19 +57,18 @@ export default function Post({post, user}: {post: Models.Document, }) {
                 console.log(err)
             })
         console.log("useeffect run")
-        console.log({hasPhoto})
-        if (hasPhoto) {
-            const filePromise = storage.listFiles($id)
-
-            filePromise
-                .then(res => {
-                    const array = res.files.map(file => `https://cloud.appwrite.io/v1/storage/buckets/${$id}/files/${file.$id}/view?project=64749ba6eade18e58a13`)
-                    setImageUrls(array)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
+        // if (hasPhoto) {
+        //     const filePromise = storage.listFiles($id)
+        //
+        //     filePromise
+        //         .then(res => {
+        //             const array = res.files.map(file => `https://cloud.appwrite.io/v1/storage/buckets/${$id}/files/${file.$id}/view?project=64749ba6eade18e58a13`)
+        //             setImageUrls(array)
+        //         })
+        //         .catch(error => {
+        //             console.log(error)
+        //         })
+        // }
 
     },[post])
 
@@ -98,7 +100,7 @@ export default function Post({post, user}: {post: Models.Document, }) {
                            {/*Might want to loop through each \n*/}
                            {/* Currently image is not rendered correctly, need to find alter way*/}
                             <div className="mt-1 grid grid-cols-2 gap-1 rounded-3xl overflow-scroll max-h-96">
-                            {imageUrls && imageUrls?.map((url: string, index: number) => (
+                            {post.image_url && post.image_url?.map((url: string, index: number) => (
                                 <div key={index} className='overflow-scroll h-36'>
                                <Image src={url} width={500} height={500}
                                                       alt="tweet image"
