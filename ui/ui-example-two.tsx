@@ -8,6 +8,9 @@ import Post from "#/ui/post";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardLeftBar from "#/ui/dashboard-left-bar";
+import Link from "next/link";
+
+import Dog from '#/public/dog_one.jpg'
 
 // once new post submitted -> new bucket get created -> file uploaded to that bucket -> update posts state in this component with the url
 
@@ -178,30 +181,21 @@ export default function UiExampleTwo () {
             <ToastContainer/>
             <div className="container mx-auto flex flex-col lg:flex-row items-center py-4">
                 <nav className="w-full lg:w-2/5 " >
-                    <a href="#"
+                    <Link href="/"
                        className="text-grey-darker text-sm mr-4 font-semibold pb-6 border-b-2 border-solid border-transparent no-underline hover:text-teal hover:border-teal hover:no-underline"><i
-                        className="fa fa-home fa-lg"></i> Home</a>
-                    <a href="#"
+                        className="fa fa-home fa-lg"></i> Home</Link>
+                    <Link href="/dashboard"
                        className="text-grey-darker text-sm mr-4 font-semibold pb-6 border-b-2 border-solid border-transparent no-underline hover:text-teal hover:border-teal hover:no-underline"><i
-                        className="fa fa-bolt fa-lg"></i> Moments</a>
-                    <a href="#"
+                        className="fa fa-bolt fa-lg"></i> Dashboard</Link>
+                    <Link href="/media"
                        className="text-grey-darker text-sm mr-4 font-semibold pb-6 border-b-2 border-solid border-transparent no-underline hover:text-teal hover:border-teal hover:no-underline"><i
-                        className="fa fa-bell fa-lg"></i> Notifications</a>
-                    <a href="#"
-                       className="text-grey-darker text-sm mr-4 font-semibold pb-6 border-b-2 border-solid border-transparent no-underline hover:text-teal hover:border-teal hover:no-underline"><i
-                        className="fa fa-envelope fa-lg"></i> Messages</a>
-
+                        className="fa fa-envelope fa-lg"></i> Media</Link>
                 </nav>
                 <div className="w-full lg:w-1/5 text-center my-4 lg:my-0"><a href="#"><i
                     className="fa fa-twitter fa-lg text-blue"></i></a></div>
                 <div className="w-full lg:w-2/5 flex lg:justify-end">
-                    <div className="mr-4 relative">
-                        <input type="text" className="bg-grey-lighter h-8 px-4 py-2 text-xs w-48 rounded-full"
-                               placeholder="Search Twitter"/>
-                            <span className="flex items-center absolute pin-r pin-y mr-3"><i
-                                className="fa fa-search text-grey"></i></span>
-                    </div>
-                    <div className="mr-4"><a href="#"><Image width={30} height={30}
+                    
+                    <div className="mr-4 lg:visible sm:invisible"><a href="#"><Image width={30} height={30}
                         src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_avatar.jpg" alt="avatar"
                         className="h-8 w-8 rounded-full"/></a></div>
                     <div>
@@ -280,38 +274,18 @@ export default function UiExampleTwo () {
 
             <div className="bg-white p-3 mb-3">
                 <div className="mb-3">
-                    <span className="text-lg font-bold">Trends for you</span>
+                    <span className="text-lg font-bold">Media</span>
+                </div>
+                <div className="grid grid-cols-2 grid-rows-3 gap-1 rounded-3xl overflow-scroll">
+                    <Image width={500} height={500} src={Dog} alt="dog image"/>
+                    <Image width={500} height={500} src={Dog} alt="dog image"/>
+                    <Image width={500} height={500} src={Dog} alt="dog image"/>
+                    <Image width={500} height={500} src={Dog} alt="dog image"/>
+                    <Image width={500} height={500} src={Dog} alt="dog image"/>
+                    <Image width={500} height={500} src={Dog} alt="dog image"/>
                 </div>
 
-                <div className="mb-3 leading-tight">
-                    <div><a href="#" className="text-teal font-bold">Happy New Year</a></div>
-                    <div><a href="#" className="text-grey-dark text-xs">645K Tweets</a></div>
-                </div>
-
-                <div className="mb-3 leading-tight">
-                    <div><a href="#" className="text-teal font-bold">Happy 2018</a></div>
-                    <div><a href="#" className="text-grey-dark text-xs">NYE 2018 Celebrations</a></div>
-                </div>
-
-                <div className="mb-3 leading-tight">
-                    <div><a href="#" className="text-teal font-bold">#ByeBye2017</a></div>
-                    <div><a href="#" className="text-grey-dark text-xs">21.7K Tweets</a></div>
-                </div>
-
-                <div className="mb-3 leading-tight">
-                    <div><a href="#" className="text-teal font-bold">#SomeHashTag</a></div>
-                    <div><a href="#" className="text-grey-dark text-xs">45K Tweets</a></div>
-                </div>
-
-                <div className="mb-3 leading-tight">
-                    <div><a href="#" className="text-teal font-bold">Something Trending</a></div>
-                    <div><a href="#" className="text-grey-dark text-xs">36K Tweets</a></div>
-                </div>
-
-                <div className="mb-3 leading-tight">
-                    <div><a href="#" className="text-teal font-bold">#ColdAF</a></div>
-                    <div><a href="#" className="text-grey-dark text-xs">100K Tweets</a></div>
-                </div>
+                <Link className="block w-full border border-black-100 text-center mt-3 p-3 rounded-lg bg-slate-200" href='/media'> See all</Link>
 
             </div>
 

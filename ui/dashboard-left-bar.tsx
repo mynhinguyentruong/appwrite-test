@@ -7,7 +7,7 @@ export default function DashboardLeftBar() {
             </div>
 
             <div className="mb-4">
-                For dog owners that frequent the reservoir at David A. Balfour Park, near Yonge and St. Clair.
+                For dog owners that frequently visit the reservoir at David A. Balfour Park, near Yonge and St. Clair.
             </div>
             <div className="mb-4"><i className="fa fa-calendar fa-lg text-grey-darker mr-1"></i><a href="#"
                                                                                                    className="text-teal no-underline hover:underline">Created
