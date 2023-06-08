@@ -11,6 +11,7 @@ import DashboardLeftBar from "#/ui/dashboard-left-bar";
 import Link from "next/link";
 
 import Dog from '#/public/dog_one.jpg'
+import Navbar from "#/ui/navbar";
 
 // once new post submitted -> new bucket get created -> file uploaded to that bucket -> update posts state in this component with the url
 
@@ -177,35 +178,8 @@ export default function UiExampleTwo () {
 
     return (
         <>
-        <div className="bg-white">
             <ToastContainer/>
-            <div className="container mx-auto flex flex-col lg:flex-row items-center py-4">
-                <nav className="w-full lg:w-2/5 " >
-                    <Link href="/"
-                       className="text-grey-darker text-sm mr-4 font-semibold pb-6 border-b-2 border-solid border-transparent no-underline hover:text-teal hover:border-teal hover:no-underline"><i
-                        className="fa fa-home fa-lg"></i> Home</Link>
-                    <Link href="/dashboard"
-                       className="text-grey-darker text-sm mr-4 font-semibold pb-6 border-b-2 border-solid border-transparent no-underline hover:text-teal hover:border-teal hover:no-underline"><i
-                        className="fa fa-bolt fa-lg"></i> Dashboard</Link>
-                    <Link href="/media"
-                       className="text-grey-darker text-sm mr-4 font-semibold pb-6 border-b-2 border-solid border-transparent no-underline hover:text-teal hover:border-teal hover:no-underline"><i
-                        className="fa fa-envelope fa-lg"></i> Media</Link>
-                </nav>
-                <div className="w-full lg:w-1/5 text-center my-4 lg:my-0"><a href="#"><i
-                    className="fa fa-twitter fa-lg text-blue"></i></a></div>
-                <div className="w-full lg:w-2/5 flex lg:justify-end">
-                    
-                    <div className="mr-4 lg:visible sm:invisible"><a href="#"><Image width={30} height={30}
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/tt_avatar.jpg" alt="avatar"
-                        className="h-8 w-8 rounded-full"/></a></div>
-                    <div>
-                        <button
-                            className="bg-teal hover:bg-teal-dark text-white font-medium py-2 px-4 rounded-full">Tweet
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <Navbar />
     <div className="bg-white border">
         <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
 
@@ -285,7 +259,7 @@ export default function UiExampleTwo () {
                     <Image width={500} height={500} src={Dog} alt="dog image"/>
                 </div>
 
-                <Link className="block w-full border border-black-100 text-center mt-3 p-3 rounded-lg bg-slate-200" href='/media'> See all</Link>
+                <Link className="block w-full border border-black-100 text-center font-bold mt-3 p-3 rounded-lg bg-slate-200" href='/media'> See all</Link>
 
             </div>
 
