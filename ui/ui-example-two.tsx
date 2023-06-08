@@ -53,7 +53,7 @@ export default function UiExampleTwo () {
 
     function contentChanges(e: ChangeEvent<HTMLTextAreaElement>) {
         setContent(e.target.value)
-        console.log(e.target.value)
+        console.log(JSON.stringify(e.target.value))
     }
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -61,7 +61,7 @@ export default function UiExampleTwo () {
         e.preventDefault()
         setIsLoading(true)
         const data = {
-            content_body: content,
+            content_body: JSON.stringify(content),
             user_id: user?.$id,
             hasPhoto: !!selectedImages
         }

@@ -12,7 +12,7 @@ interface PostProps extends Models.Document {
     likes: number
 }
 
-type LikePostFn = (postId: string, userId: string | null) => Promise<void>
+type LikePostFn = (postId: string, userId: string | undefined) => Promise<void>
 
 if (!process.env.NEXT_PUBLIC_DATABASE_ID) throw new Error("Provide NEXT_PUBLIC_DATABASE_ID ENV")
 if (!process.env.NEXT_PUBLIC_POST_COLLECTION_ID) throw new Error ("Provide NEXT_PUBLIC_POST_COLLECTION_ID")
@@ -24,27 +24,7 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
     const [owner, setOwner] = useState<Models.Document | null>(null)
     const [imageUrls, setImageUrls] = useState<string[] | null>(null)
 
-    // const likePost = async () => {
-    //     const isAlreadyLiked = post.likes.some((userId: string) => userId === user?.$id)
-    //     if (isAlreadyLiked) {
-    //         // remove the userId from the likes array
-    //         const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
-    //             likes: post.likes.filter((userId: string) => userId !== user?.$id)
-    //         })
-
-    //         promise.then(res => console.log("doc updated")).catch(err => console.log("error update likes attr"))
-    //     }
-
-    //     if (!isAlreadyLiked) {
-    //         // add the userId
-    //         const currentLikes = [...post.likes]
-    //         currentLikes.push(user?.$id)
-    //         const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
-    //             likes: currentLikes
-    //         })
-    //     }
-    // }
-
+  
     useEffect(() => {
         const { user_id, hasPhoto, $id } = post
 
@@ -75,7 +55,7 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
     },[post])
 
     return (
-        owner && imageUrls && (
+        owner && (
             <div className="flex border-b border-solid border-grey-light">
                 <div className="w-1/8  pl-3 pt-3 ">
                     <div><a href="#"><Image width={30} height={30}
@@ -97,8 +77,9 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                         </div>
                     </div>
                     <div>
-                        <div className="mb-6 w-full">
-                            <p className="mb-6">{post?.content_body} </p>
+                        <div className="mb-6 w-full mt-2">
+                            {JSON.parse(post?.content_body).split("\n").map((line: string, index: number) => (<p key={index} className="mb-6">{line} </p>))}
+                            
                            {/*Might want to loop through each \n*/}
                            {/* Currently image is not rendered correctly, need to find alter way*/}
                             <div className="mt-1 grid grid-cols-2 gap-1 rounded-3xl overflow-scroll max-h-96">
