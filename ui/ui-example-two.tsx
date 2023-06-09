@@ -12,6 +12,7 @@ import Link from "next/link";
 
 import Dog from '#/public/dog_one.jpg'
 import Navbar from "#/ui/navbar";
+import { url } from "inspector";
 
 // once new post submitted -> new bucket get created -> file uploaded to that bucket -> update posts state in this component with the url
 
@@ -60,10 +61,64 @@ export default function UiExampleTwo () {
         console.log(JSON.stringify(e.target.value))
     }
 
-    function handleSubmit(e: FormEvent<HTMLFormElement>) {
-        // get current logged in userid
+    async function handleSubmitAsync(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         setIsLoading(true)
+
+        toast('Post sent successfully ', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+
+        const data = {
+            content_body: JSON.stringify(content),
+            user_id: user?.$id,
+            hasPhoto: !!selectedImages
+        }
+
+        const urls: string[] = []
+        try {
+            const res = await fetch('/api/new-post', {
+                method: "POST",
+                body: JSON.stringify(data)
+            })
+            const { postId } = await res.json()
+
+            if (selectedImages) {
+                for (const image of selectedImages) {
+                    const file = await storage.createFile(postId, ID.unique(), image)
+                    console.log("file upload success");
+                    urls.push(`https://cloud.appwrite.io/v1/storage/buckets/${postId}/files/${file.$id}/view?project=64749ba6eade18e58a13`)
+                }
+            }
+            
+            // update doc here
+            const post = await fetch('/api/update-post', {
+                method: 'POST',
+                body: JSON.stringify({
+                    postId,
+                    urls
+
+                })
+            })
+            setSelectedImages(null)
+            setIsLoading(false)
+            } catch (error) {
+                console.log({error});
+                
+        }
+    }
+
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        // get current logged in userid
+        e.preventDefault()
+
         const data = {
             content_body: JSON.stringify(content),
             user_id: user?.$id,
@@ -75,7 +130,7 @@ export default function UiExampleTwo () {
             .then(post => {
                 console.log("Success add doc")
                 console.log(post)
-                setIsLoading(false)
+
                 toast('Post sent successfully ', {
                     position: "top-center",
                     autoClose: 5000,
@@ -98,10 +153,11 @@ export default function UiExampleTwo () {
                         .then(bucket => {
                             console.log({bucket})
                             const urls: string[] = []
-                            for (const image of selectedImages) {
+                            for(const image of selectedImages) {
 
+                    
 
-                                const promise = storage.createFile(bucket.bucketId, ID.unique(), image)
+                                const promise =  storage.createFile(bucket.bucketId, ID.unique(), image)
 
                                 promise
                                     .then(file => {
@@ -156,7 +212,6 @@ export default function UiExampleTwo () {
                 arr.push(url)
             }
             setImageUrl(arr)
-            console.log(arr)
         }
     }, [selectedImages])
 
@@ -196,7 +251,7 @@ export default function UiExampleTwo () {
             <div className="w-7/8 p-3 pl-0 bg-gray-100">
 
                             <div className="mb-4">
-                               <form onSubmit={handleSubmit}>
+                               <form onSubmit={handleSubmitAsync}>
                                    <textarea
                                        rows={2}
                                        wrap="hard"
