@@ -12,7 +12,6 @@ import Link from "next/link";
 
 import Dog from '#/public/dog_one.jpg'
 import Navbar from "#/ui/navbar";
-import { url } from "inspector";
 
 // once new post submitted -> new bucket get created -> file uploaded to that bucket -> update posts state in this component with the url
 
@@ -53,12 +52,10 @@ export default function UiExampleTwo () {
 
     function fileChanges(e: ChangeEvent<HTMLInputElement>) {
         setSelectedImages(e.target.files)
-
     }
 
     function contentChanges(e: ChangeEvent<HTMLTextAreaElement>) {
         setContent(e.target.value)
-        console.log(JSON.stringify(e.target.value))
     }
 
     async function handleSubmitAsync(e: FormEvent<HTMLFormElement>) {
@@ -115,85 +112,6 @@ export default function UiExampleTwo () {
         }
     }
 
-    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-        // get current logged in userid
-        e.preventDefault()
-
-        const data = {
-            content_body: JSON.stringify(content),
-            user_id: user?.$id,
-            hasPhoto: !!selectedImages
-        }
-        const promise = databases.createDocument('647b675e73a83b821ca7','647f52561dc3d331e6aa',ID.unique(),data)
-
-        promise
-            .then(post => {
-                console.log("Success add doc")
-                console.log(post)
-
-                toast('Post sent successfully ', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                setContent("")
-                if (selectedImages) {
-                    fetch('/api/create-bucket', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            postId: post.$id
-                        })
-                    })
-                        .then(res => res.json())
-                        .then(bucket => {
-                            console.log({bucket})
-                            const urls: string[] = []
-                            for(const image of selectedImages) {
-
-                    
-
-                                const promise =  storage.createFile(bucket.bucketId, ID.unique(), image)
-
-                                promise
-                                    .then(file => {
-                                        console.log(file)
-                                        console.log("File upload success")
-                                        setPosts((prevPosts: Models.Document[] | undefined) => {
-                                            return prevPosts?.map(prevPost => {
-                                                return prevPost.$id === bucket.bucketId ? {...prevPost, image_url: [...prevPost.image_url, `https://cloud.appwrite.io/v1/storage/buckets/${bucket.bucketId}/files/${file.$id}/view?project=64749ba6eade18e58a13`]} : prevPost
-                                            })
-                                        })
-                                    })
-                                    .catch(error => {
-                                        console.log(error)
-                                        console.log(`There is some error uploading file in bucket ${bucket.bucketId}`)
-                                    })
-                            }
-                            // update post with the url
-                            const promise = databases.updateDocument(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, post.$id, {
-                                image_url: urls
-                            })
-
-                            promise.then(res => {
-                                console.log("update url in post success")
-                            }).catch(err => {
-                                console.log("could not update url in post")
-                            })
-                        })
-
-                }
-        })
-            .catch(error => {
-                console.log("Fail to create new doc")
-                console.log(error)
-        })
-    }
-
     useEffect(() => {
         const promise = account.get()
         promise.then(res => {
@@ -216,7 +134,7 @@ export default function UiExampleTwo () {
     }, [selectedImages])
 
     useEffect(() => {
-        const promise = databases.listDocuments('647b675e73a83b821ca7', '647f52561dc3d331e6aa', [
+        const promise = databases.listDocuments(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID, [
             Query.orderDesc('$createdAt')
         ])
 
