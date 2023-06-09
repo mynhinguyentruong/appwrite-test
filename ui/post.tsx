@@ -22,7 +22,6 @@ if (!process.env.NEXT_PUBLIC_POST_COLLECTION_ID) throw new Error ("Provide NEXT_
 export default function Post({post, user, likePost}: {post: Models.Document, user: Models.User<Models.Preferences> | null, likePost: LikePostFn}) {
 
     const [owner, setOwner] = useState<Models.Document | null>(null)
-    const [imageUrls, setImageUrls] = useState<string[] | null>(null)
 
   
     useEffect(() => {
@@ -39,18 +38,6 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                 console.log(err)
             })
         console.log("useeffect run")
-        if (hasPhoto) {
-            const filePromise = storage.listFiles($id)
-        
-            filePromise
-                .then(res => {
-                    const array = res.files.map(file => `https://cloud.appwrite.io/v1/storage/buckets/${$id}/files/${file.$id}/view?project=64749ba6eade18e58a13`)
-                    setImageUrls(array)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }
 
     },[post])
 
@@ -89,12 +76,7 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                                                       alt="tweet image"
                                                       className="border border-solid border-grey-light rounded-sm object-cover object-center"/>
                                 </div>
-                            )) : imageUrls?.map((url: string, index: number) => (
-                                <div key={index} className='overflow-scroll h-36'>
-                               <Image src={url} width={500} height={500}
-                                                      alt="tweet image"
-                                                      className="border border-solid border-grey-light rounded-sm object-cover object-center"/>
-                                </div>))
+                            )) : (<div></div>)
                             }
                             </div>
                         </div>
