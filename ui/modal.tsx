@@ -3,8 +3,7 @@
 import { Fragment, useCallback, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-import { useRouter } from 'next/navigation'
-
+import { useRouter } from 'next/router'
 export default function Modal() {
   const [open, setOpen] = useState(true)
 
