@@ -3,25 +3,23 @@
 import Image from "next/image";
 import {useEffect, useState, ChangeEvent, FormEvent} from "react";
 import {account, databases, storage} from "#/lib/appwriteConfig";
-import {ID, Permission, Role, Query, Models} from "appwrite";
+import {ID, Query, Models} from "appwrite";
 import Post from "#/ui/post";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardLeftBar from "#/ui/dashboard-left-bar";
-import Link from "next/link";
 
-import Dog from '#/public/dog_one.jpg'
 import Navbar from "#/ui/navbar";
 
 // once new post submitted -> new bucket get created -> file uploaded to that bucket -> update posts state in this component with the url
 
-export default function UiExampleTwo () {
+export default function UiExampleTwo ({ user }: {user: Models.User<Models.Preferences> | Models.Session}) {
 
 
     const [selectedImages, setSelectedImages] = useState<FileList | null>(null)
     const [imageUrl, setImageUrl] = useState<string[] | []>([])
     const [content, setContent] = useState("")
-    const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null)
+    // const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null)
     const [posts, setPosts] = useState<Models.Document[] | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -113,16 +111,6 @@ export default function UiExampleTwo () {
     }
 
     useEffect(() => {
-        const promise = account.get()
-        promise.then(res => {
-            console.log(res)
-            setUser(res)
-        }).catch(error => console.log(error))
-
-
-    }, [])
-
-    useEffect(() => {
         if (selectedImages) {
             const arr = []
             for (const image of selectedImages) {
@@ -134,7 +122,7 @@ export default function UiExampleTwo () {
     }, [selectedImages])
 
     useEffect(() => {
-        const promise = databases.listDocuments(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID, [
+        const promise = databases.listDocuments(process.env.NEXT_PUBLIC_DATABASE_ID as string, process.env.NEXT_PUBLIC_POST_COLLECTION_ID as string, [
             Query.orderDesc('$createdAt')
         ])
 
@@ -216,37 +204,6 @@ export default function UiExampleTwo () {
             ))}
 
         </div>
-
-        <div className="w-full lg:w-1/4 pl-4 ">
-
-            <div className="bg-white p-3 mb-3">
-                <div className="mb-3">
-                    <span className="text-lg font-bold">Media</span>
-                </div>
-                <div className="grid grid-cols-2 grid-rows-3 gap-1 rounded-3xl overflow-scroll">
-                    <Image width={500} height={500} src={Dog} alt="dog image"/>
-                    <Image width={500} height={500} src={Dog} alt="dog image"/>
-                    <Image width={500} height={500} src={Dog} alt="dog image"/>
-                    <Image width={500} height={500} src={Dog} alt="dog image"/>
-                    <Image width={500} height={500} src={Dog} alt="dog image"/>
-                    <Image width={500} height={500} src={Dog} alt="dog image"/>
-                </div>
-
-                <Link className="block w-full border border-black-100 text-center font-bold mt-3 p-3 rounded-lg bg-slate-200" href='/media'> See all</Link>
-
-            </div>
-
-            <div className="mb-3 text-xs">
-                <span className="mr-2"><a href="#" className="text-grey-darker">&copy; 2023 St.Clair </a></span>
-                <span className="mr-2"><a href="#" className="text-grey-darker">About</a></span>
-                <span className="mr-2"><a href="#" className="text-grey-darker">Help Center</a></span>
-                <span className="mr-2"><a href="#" className="text-grey-darker">Terms</a></span>
-                <span className="mr-2"><a href="#" className="text-grey-darker">Privacy policy</a></span>
-                <span className="mr-2"><a href="#" className="text-grey-darker">Cookies</a></span>
-                <span className="mr-2"><a href="#" className="text-grey-darker">Ads info</a></span>
-            </div>
-        </div>
-
     </div>
         </>
     )

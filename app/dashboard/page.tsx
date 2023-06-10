@@ -5,9 +5,9 @@ import { useSearchParams } from 'next/navigation';
 
 import {account} from "#/lib/appwriteConfig";
 import {useEffect, useState} from "react";
-import GlobalNav from "#/ui/global-nav";
-import Image from "next/image";
 import UiExampleTwo from "#/ui/ui-example-two";
+
+import { Models } from 'appwrite';
 
 export interface IParams {
     userId?: string,
@@ -22,6 +22,7 @@ export default function Page({params}: {params: IParams} ) {
     const secret = searchParams.get('secret')
 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [user, setUser] = useState<Models.User<Models.Preferences> | Models.Session | null>(null)
 
     useEffect(() => {
         if (userId && secret) {
@@ -34,6 +35,7 @@ export default function Page({params}: {params: IParams} ) {
                     const {userId, $id} = response
                     console.log({userId} )
                     setIsAuthenticated(true)
+                    setUser(response)
                     router.push('/dashboard')
                 })
                 .catch(error => {
@@ -53,6 +55,7 @@ export default function Page({params}: {params: IParams} ) {
                     console.log(response); // Success
                     // Permission.write(Role.user(response.$id, 'verified'))
                     setIsAuthenticated(true)
+                    setUser(response)
                 })
                 .catch(error => {
                     console.log("Error while trying to get session")
@@ -66,8 +69,8 @@ export default function Page({params}: {params: IParams} ) {
 
 
     return (
-        isAuthenticated &&
-           <UiExampleTwo/>
+        isAuthenticated && user &&
+           <UiExampleTwo user={user}/>
     )
 
 }
