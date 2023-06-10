@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import DashboardLeftBar from "#/ui/dashboard-left-bar";
 
 import Navbar from "#/ui/navbar";
+import Modal from "./modal";
 
 // once new post submitted -> new bucket get created -> file uploaded to that bucket -> update posts state in this component with the url
 
@@ -19,7 +20,6 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     const [selectedImages, setSelectedImages] = useState<FileList | null>(null)
     const [imageUrl, setImageUrl] = useState<string[] | []>([])
     const [content, setContent] = useState("")
-    // const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null)
     const [posts, setPosts] = useState<Models.Document[] | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -73,7 +73,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
 
         const data = {
             content_body: JSON.stringify(content),
-            user_id: user?.$id,
+            user_id: user.$id,
             hasPhoto: !!selectedImages
         }
 
@@ -151,7 +151,6 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
 
     <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
         <DashboardLeftBar/>
-
 
         <div className="w-full lg:w-1/2 bg-white mb-4 ">
             <div className="w-7/8 p-3 pl-0 bg-gray-100">

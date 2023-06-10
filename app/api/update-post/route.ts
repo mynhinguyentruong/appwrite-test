@@ -14,18 +14,6 @@ client
   .setProject("64749ba6eade18e58a13") // Your project ID
   .setKey(process.env.APPWRITE_API_KEY); // Your secret API key
 
-// export async function POST(request: Request) {
-//     const data = await request.json()
-//     const {postId} = data
-//     const res = await storage.createBucket(postId, postId, [
-//         Permission.create(Role.users()),
-//         Permission.write(Role.users()),
-//         Permission.read(Role.any())
-//     ],true,true)
-
-//     return NextResponse.json({ bucketId: res.$id })
-// }
-
 export async function POST(request: NextRequest) {
   const resBody = await request.json();
   const { postId, urls } = resBody;

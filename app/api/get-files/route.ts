@@ -1,25 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-import {
-  ID,
-  Client,
-  Storage,
-  Databases,
-  Permission,
-  Role,
-} from "node-appwrite";
-// Init SDK
+import { Client, Storage } from "node-appwrite";
+
 const client = new Client();
 
-export const storage = new Storage(client);
-const databases = new Databases(client);
+const storage = new Storage(client);
 
 client
-  .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-  .setProject("64749ba6eade18e58a13") // Your project ID
-  .setKey(process.env.APPWRITE_API_KEY as string); // Your secret API key
+  .setEndpoint("https://cloud.appwrite.io/v1")
+  .setProject("64749ba6eade18e58a13")
+  .setKey(process.env.APPWRITE_API_KEY as string);
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const bucketsData = await storage.listBuckets();
   const { buckets } = bucketsData;
   let imageUrls = [];

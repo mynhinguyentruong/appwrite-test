@@ -1,10 +1,11 @@
 'use client'
 
-import {UserCircleIcon} from "@heroicons/react/24/solid";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import {databases, storage} from "#/lib/appwriteConfig";
 import {Models, Query} from "appwrite";
+import Link from "next/link";
+
 
 interface PostProps extends Models.Document {
     content_body: string,
@@ -19,7 +20,7 @@ if (!process.env.NEXT_PUBLIC_POST_COLLECTION_ID) throw new Error ("Provide NEXT_
 
 
 
-export default function Post({post, user, likePost}: {post: Models.Document, user: Models.User<Models.Preferences> | null, likePost: LikePostFn}) {
+export default function Post({post, user, likePost}: {post: Models.Document, user: Models.User<Models.Preferences> | Models.Session, likePost: LikePostFn}) {
 
     const [owner, setOwner] = useState<Models.Document | null>(null)
 
@@ -106,7 +107,7 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                                 className="fa fa-envelope fa-lg mr-2"></i></a>
                             </span>
                         </div>
-                        <div><a href="#" className="text-teal">Show this thread</a></div>
+                        <div><Link href={`/post/${post.$id}`} className="text-teal">Show this thread</Link></div>
 
                     </div>
                 </div>
