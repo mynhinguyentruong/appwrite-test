@@ -11,6 +11,7 @@ import DashboardLeftBar from "#/ui/dashboard-left-bar";
 
 import Navbar from "#/ui/navbar";
 import Modal from "./modal";
+import DashboardRightBar from "./dashboard-right-bar";
 
 // once new post submitted -> new bucket get created -> file uploaded to that bucket -> update posts state in this component with the url
 
@@ -201,9 +202,10 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
             {posts && posts.map(post => (
                 <Post key={post.$id} post={post} user={user} likePost={likePost} />
             ))}
-
         </div>
+        <DashboardRightBar />
     </div>
+    
         </>
     )
 }
