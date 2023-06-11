@@ -141,7 +141,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     return (
         <>
             <ToastContainer/>
-            <Navbar />
+            {/* <Navbar /> */}
     <div className="bg-white border">
         <div className="container mx-auto flex flex-col lg:flex-row items-center lg:relative">
 
