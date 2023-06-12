@@ -29,6 +29,13 @@ export async function GET(request: Request) {
     [Query.equal("user_id", id)]
   );
 
+  console.log({ res });
+
+  if (res.total === 0)
+    return new Response("Not found", {
+      status: 404,
+    });
+
   const user = res.documents[0];
 
   return NextResponse.json(user);
