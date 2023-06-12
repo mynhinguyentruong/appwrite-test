@@ -11,8 +11,9 @@ client
   .setProject("64749ba6eade18e58a13")
   .setKey(process.env.APPWRITE_API_KEY as string);
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const resBody = await request.json();
+  console.log({ resBody });
 
   const user = await databases.listDocuments(
     "647b675e73a83b821ca7",
@@ -20,5 +21,7 @@ export async function GET(request: NextRequest) {
     [Query.equal("user_id", resBody.user_id)]
   );
 
-  return NextResponse.json(user);
+  const data = user.documents[0];
+
+  return NextResponse.json(data);
 }
