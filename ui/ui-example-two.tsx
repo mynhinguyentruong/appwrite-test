@@ -25,7 +25,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     const [content, setContent] = useState("")
     const [posts, setPosts] = useState<Models.Document[] | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [owner, setOwner] = useState<Models.Document | null>(null)
+    const [currentUser, setCurrentUser] = useState<Models.Document | null>(null)
 
 
     async function likePost(postId: string, userId: string | undefined) {
@@ -147,9 +147,9 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
         ])
 
         promise
-            .then(res => setOwner(res.documents[0]))
+            .then(res => setCurrentUser(res.documents[0]))
             .catch(err => {
-                console.log("Unable to get owner for this post")
+                console.log("Unable to get currentUser for this post")
                 console.log(err)
             })
         console.log("useeffect run")
@@ -189,7 +189,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
                 {/* <!--middle creat tweet--> */}
                 <div className="flex">
                     <div className="m-2 w-10 py-1">
-                        <Image width={40} height={40} className="inline-block h-10 w-10 rounded-full" src={owner?.user_image} alt="" />
+                        <Image width={40} height={40} className="inline-block h-10 w-10 rounded-full" src={currentUser?.user_image} alt="" />
                     </div>
                     <div className="flex-1 px-2 pt-2 mt-2">
                         <textarea 
@@ -255,7 +255,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
                           </button>
                     </div>
                 </div>
-               {/*END */}
+               {/* */}
 
                 
                 {/* change */}

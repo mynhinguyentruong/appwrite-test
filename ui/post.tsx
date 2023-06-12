@@ -48,10 +48,10 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                 <div className="w-1/8  pl-3 pt-3 ">
                     <div><a href="#"><Image width={30} height={30}
                                             src={owner?.user_image} alt="avatar"
-                                            className="rounded-full sm:h-12 sm:w-12 mr-2"/></a></div>
+                                            className="rounded-full sm:h-10 sm:w-10 mr-2"/></a></div>
                 </div>
 
-                <div className="w-7/8 p-3 pl-0 ">
+                <div className="w-7/8 p-2 pl-0 ">
                     <div className="flex justify-between w-full">
                         <div>
                             <span className="font-bold text-base leading-6 dark:text-white text-slate-900"><a href="#" className="text-black dark:text-white">{owner?.user_name}</a></span>
