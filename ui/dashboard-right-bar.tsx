@@ -16,9 +16,9 @@ export default function DashboardRightBar() {
                     <span className="text-lg font-bold">Media</span>
                 </div>
                 <div className="grid grid-rows-1 gap-1 rounded-3xl overflow-scroll">
-                    {data?.map((url: string, index: number) => ( 
+                    {data?.slice(0,2).map((url: string, index: number) => ( 
                         <div key={index} className="overflow-hidden">
-                            <Image  width={500} height={500} src={url} alt="dog image"/>
+                            <Image  width={300} height={300} src={url} alt="dog image"/>
                         </div>
                     ))}
 
