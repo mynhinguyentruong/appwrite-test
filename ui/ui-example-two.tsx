@@ -108,6 +108,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
             })
             setSelectedImages(null)
             setIsLoading(false)
+            setContent("")
             } catch (error) {
                 console.log({error});
                 

@@ -15,7 +15,7 @@ export default function UserAuthForm() {
         const formData = new FormData(e.target as HTMLFormElement)
         const email = formData.get("email")
         console.log({email})
-        const url = "http://localhost:3000/dashboard"
+        const url = "https://appwrite-test-nhi-ymihn.vercel.app/dashboard"
 
 
         if (typeof email === "string") {
