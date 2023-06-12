@@ -15,9 +15,9 @@ const storage = new Storage(client);
 const databases = new Databases(client);
 
 client
-  .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-  .setProject("64749ba6eade18e58a13") // Your project ID
-  .setKey(process.env.APPWRITE_API_KEY as string); // Your secret API key
+  .setEndpoint("https://cloud.appwrite.io/v1")
+  .setProject("64749ba6eade18e58a13")
+  .setKey(process.env.APPWRITE_API_KEY as string);
 
 export async function POST(request: NextRequest) {
   // create post

@@ -212,7 +212,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
                 </div>
                 </div>
                 
-
+                {/* SVG with submit button */}
                 <div className="flex">
                     <div className="w-10"></div>
 
@@ -255,6 +255,8 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
                           </button>
                     </div>
                 </div>
+               {/*END */}
+
                 
                 {/* change */}
                 <input type="file" id="file" name="file" multiple accept="image/*"
