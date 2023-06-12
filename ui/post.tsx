@@ -67,9 +67,7 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                     <div>
                         <div className="mb-3 w-full mt-2 dark:text-white text-slate-900">
                             {JSON.parse(post?.content_body).split("\n").map((line: string, index: number) => (<p key={index} className="mb-2">{line} </p>))}
-                            
-                           {/*Might want to loop through each \n*/}
-                           {/* Currently image is not rendered correctly, need to find alter way*/}
+                
                             <div className="mt-1  gap-1 rounded-3xl overflow-scroll max-h-96">
                             {post?.image_url.length > 0 ? 
                                 post?.image_url.length === 1 
