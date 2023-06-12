@@ -65,7 +65,7 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                         </div>
                     </div>
                     <div>
-                        <div className="mb-6 w-full mt-2 dark:text-white text-slate-900">
+                        <div className="mb-3 w-full mt-2 dark:text-white text-slate-900">
                             {JSON.parse(post?.content_body).split("\n").map((line: string, index: number) => (<p key={index} className="mb-2">{line} </p>))}
                             
                            {/*Might want to loop through each \n*/}
@@ -73,8 +73,8 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                             <div className="mt-1  gap-1 rounded-3xl overflow-scroll max-h-96">
                             {post?.image_url.length > 0 ? 
                                 post?.image_url.length === 1 
-                                ? (<div className="md:flex-shrink pr-6 pt-3 overflow-hidden" >
-                                <Image width={0} height={0} sizes="100vw" className="rounded-lg object-cover w-full h-64" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=448&q=80" alt="Woman paying for a purchase"/>
+                                ? (<div className="md:flex-shrink pr-6 pt-3 overflow-scroll" >
+                                <Image width={0} height={0} sizes="100vw" className="rounded-lg object-cover w-full h-64" src={post.image_url[0]} alt="Woman paying for a purchase"/>
                               </div>)
                                 : post.image_url?.map((url: string, index: number) => 
                                     (<div key={index} className='overflow-scroll h-36'>

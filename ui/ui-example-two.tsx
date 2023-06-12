@@ -25,6 +25,8 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     const [content, setContent] = useState("")
     const [posts, setPosts] = useState<Models.Document[] | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [owner, setOwner] = useState<Models.Document | null>(null)
+
 
     async function likePost(postId: string, userId: string | undefined) {
         if (!userId) return;
@@ -139,6 +141,20 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
             })
     }, [isLoading])
 
+    useEffect(() => {
+        const promise = databases.listDocuments('647b675e73a83b821ca7', '647cb553d054c55d41db',[
+            Query.equal('user_id', user.$id)
+        ])
+
+        promise
+            .then(res => setOwner(res.documents[0]))
+            .catch(err => {
+                console.log("Unable to get owner for this post")
+                console.log(err)
+            })
+        console.log("useeffect run")
+    }, [user.$id])
+
     return (
         <>
             <ToastContainer/>
@@ -152,9 +168,9 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     </div>
 
     <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-        <DashboardLeftBar/>
+        <DashboardLeftBar user={user}/>
 
-        <div className="w-full lg:w-1/2 bg-white mb-4 ">
+        <div className="w-full lg:w-1/2 bg-white mb-4 border-x-2">
         <div className="flex">
                     <div className="flex-1 m-2">
                         <h2 className="px-4 py-2 text-xl font-semibold dark:text-white text-slate-900">Dashboard</h2>
@@ -173,7 +189,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
                 {/* <!--middle creat tweet--> */}
                 <div className="flex">
                     <div className="m-2 w-10 py-1">
-                        <Image width={40} height={40} className="inline-block h-10 w-10 rounded-full" src="https://pbs.twimg.com/profile_images/1121328878142853120/e-rpjoJi_bigger.png" alt="" />
+                        <Image width={40} height={40} className="inline-block h-10 w-10 rounded-full" src={owner?.user_image} alt="" />
                     </div>
                     <div className="flex-1 px-2 pt-2 mt-2">
                         <textarea 
