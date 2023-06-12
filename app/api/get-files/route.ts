@@ -11,7 +11,7 @@ client
   .setProject("64749ba6eade18e58a13")
   .setKey(process.env.APPWRITE_API_KEY as string);
 
-export async function GET() {
+export async function GET(request: Request) {
   const bucketsData = await storage.listBuckets();
   const { buckets } = bucketsData;
   let imageUrls = [];
