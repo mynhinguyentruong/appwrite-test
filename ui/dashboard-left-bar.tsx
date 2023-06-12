@@ -3,7 +3,7 @@ import Image from "next/image";
 import UserProfile from "#/ui/user-profile";
 import { Models } from "appwrite";
 
-export default function DashboardLeftBar({user}: {user: Models.User<Models.Preferences> | Models.Session}) {
+export default function DashboardLeftBar() {
 
     return (
         <div className="w-full lg:w-1/4 pl-4 lg:pl-0 pr-6 mt-8 mb-4">

@@ -168,7 +168,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     </div>
 
     <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-        <DashboardLeftBar user={user}/>
+        <DashboardLeftBar/>
 
         <div className="w-full lg:w-1/2  mb-4 border-x-2">
         <div className="flex">
