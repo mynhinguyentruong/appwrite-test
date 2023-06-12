@@ -4,8 +4,21 @@ import { Fragment, useCallback, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-export default function Modal() {
+import useSWR from 'swr'
+
+const fetcher = (endpoint: string) => fetch(endpoint).then(res => res.json())
+
+
+
+export default function Modal({id}: {id: string}) {
+  const { data, error: postError, isLoading: postIsLoading } = useSWR(`/api/post?id=${id}`, fetcher)
+  const { data: user, error, isLoading } = useSWR(`/api/user?userId=${data?.user_id}`, fetcher)
+
+  console.log({data});
+  
+
   const [open, setOpen] = useState(true)
+  
 
   const cancelButtonRef = useRef(null)
   const router = useRouter()
@@ -14,7 +27,17 @@ export default function Modal() {
     router.back()
   }, [router])
 
-  return (
+    // const postRes = await fetch(`/api/post?id=${params.id}`)
+  // const post = await postRes.json()
+
+  // const userRes = await fetch(`/api/get`, {
+  //   method: 'POST',
+  //   body: JSON.stringify({ user_id: post.user_id})
+  // })
+
+  // const user = await userRes.json()
+
+  return data && user && (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={handleClose}>
         <Transition.Child
@@ -48,19 +71,35 @@ export default function Modal() {
                         className="h-8 w-8 rounded-full"
                         width={32}
                         height={32}
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={user.user_image}
                         alt=""
                       />
                     </div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                        Username
+                        {user && user.user_name}
                       </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Content
-                        </p>
-                      </div>
+                      <div className="mb-3 w-full mt-2 dark:text-white text-slate-900">
+                            {/* {JSON.parse(data?.content_body).split("\n").map((line: string, index: number) => (<p key={index} className="mb-2">{line} </p>))} */}
+                            {data?.content_body && JSON.parse(data?.content_body).split("\n").map((line: string, index: number) => (<p key={index} className="mb-2">{line} </p>))}
+                           {/*Might want to loop through each \n*/}
+                           {/* Currently image is not rendered correctly, need to find alter way*/}
+                            <div className="mt-1  gap-1 rounded-3xl overflow-scroll max-h-96">
+                            {data?.image_url.length > 0 ? 
+                                data?.image_url.length === 1 
+                                ? (<div className="md:flex-shrink pr-6 pt-3 overflow-scroll" >
+                                <Image width={0} height={0} sizes="100vw" className="rounded-lg object-cover w-full h-64" src={data.image_url[0]} alt="Woman paying for a purchase"/>
+                              </div>)
+                                : data.image_url?.map((url: string, index: number) => 
+                                    (<div key={index} className='overflow-scroll h-36'>
+                                        <Image src={url} width={500} height={500}
+                                                alt="tweet image"
+                                                      className="border border-solid border-grey-light rounded-sm object-cover object-center"/>
+                                    </div>
+                            )) : (<div></div>)
+                            }
+                            </div>
+                        </div>
                     </div>
                   </div>
                 </div>
