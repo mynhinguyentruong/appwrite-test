@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 
-import {account} from "#/lib/appwriteConfig";
+import {account, databases} from "#/lib/appwriteConfig";
 import {useEffect, useState} from "react";
 import UiExampleTwo from "#/ui/ui-example-two";
 
-import { Models } from 'appwrite';
+import { Models, ID } from 'appwrite';
 
 export interface IParams {
     userId?: string,
@@ -33,6 +33,15 @@ export default function Page({params}: {params: IParams} ) {
                     console.log("New session created: ")
                     console.log(response); // Success
                     const {userId, $id} = response
+    
+                    const newUserPromise = databases.createDocument('647b675e73a83b821ca7', '647cb553d054c55d41db', ID.unique(), {
+                            user_id: userId,
+                            user_handle: "handle",
+                            user_name: "username"
+                        })
+                        newUserPromise.then(res => console.log(res)).catch(error => console.log({error}))
+                
+
                     console.log({userId} )
                     setIsAuthenticated(true)
                     setUser(response)
