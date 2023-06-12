@@ -156,7 +156,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     }, [user.$id])
 
     return (
-        <>
+        <div className="bg-white dark:bg-black">
             <ToastContainer/>
             {/* <Navbar /> */}
     <div className="bg-white border">
@@ -170,7 +170,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
         <DashboardLeftBar user={user}/>
 
-        <div className="w-full lg:w-1/2 bg-white mb-4 border-x-2">
+        <div className="w-full lg:w-1/2  mb-4 border-x-2">
         <div className="flex">
                     <div className="flex-1 m-2">
                         <h2 className="px-4 py-2 text-xl font-semibold dark:text-white text-slate-900">Dashboard</h2>
@@ -292,6 +292,6 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
         <DashboardRightBar />
     </div>
     
-        </>
+        </div>
     )
 }

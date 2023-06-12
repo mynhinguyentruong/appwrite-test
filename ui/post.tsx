@@ -54,7 +54,7 @@ export default function Post({post, user, likePost}: {post: Models.Document, use
                 <div className="w-7/8 p-3 pl-0 ">
                     <div className="flex justify-between w-full">
                         <div>
-                            <span className="font-bold text-base leading-6 dark:text-white text-slate-900"><a href="#" className="text-black">{owner?.user_name}</a></span>
+                            <span className="font-bold text-base leading-6 dark:text-white text-slate-900"><a href="#" className="text-black dark:text-white">{owner?.user_name}</a></span>
                             <span className="text-grey-dark mx-1 text-sm leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150">{owner?.user_handle && `@${owner?.user_handle}`}</span>
                             <span className="text-grey-dark mx-1 text-sm leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150">&middot;</span>
                             <span className="text-grey-dark mx-1 text-sm leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150">{post?.$createdAt.slice(0,10)}</span>

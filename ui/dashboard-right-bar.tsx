@@ -8,7 +8,7 @@ export default function DashboardRightBar() {
     return (
         <div className="w-full lg:w-1/4 pl-4 ">
 
-            <div className="bg-white p-3 mb-3">
+            <div className=" p-3 mb-3">
                 <div className="mb-3">
                     <span className="text-lg font-bold">Media</span>
                 </div>
@@ -21,7 +21,7 @@ export default function DashboardRightBar() {
                     <Image width={500} height={500} src={Dog} alt="dog image"/>
                 </div>
 
-                <Link className="block w-full border border-black-100 text-center font-bold mt-3 p-3 rounded-lg bg-slate-200" href='/media'> See all</Link>
+                <Link className="block w-full  text-center dark:bg-blue-400 dark:text-white mt-3 p-3 rounded-3xl bg-slate-200 font-bold text-blue-400" href='/media'> See all</Link>
 
             </div>
 
