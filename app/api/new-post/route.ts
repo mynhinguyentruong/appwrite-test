@@ -50,17 +50,4 @@ export async function POST(request: NextRequest) {
   }
 
   return NextResponse.json({ postId: post.$id });
-
-  // if hasphoto, upload file
 }
-
-// post create document
-
-// post create bucket if hasphoto
-
-// return the bucketId to the client
-
-// client: bucketId to make req upload file
-
-// on all file upload success, make req to query all post
-//return NextResponse.json({ message: "success" });
