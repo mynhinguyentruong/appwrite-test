@@ -70,7 +70,7 @@ export default function PostPage({ params: { id }}: { params: { id: string }}) {
                 
                 <div className="w-1/8  pl-3 pt-3 ">
                     <div><a href="#"><Image width={30} height={30}
-                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="avatar"
+                                            src={user.image_url ? user.image_url : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} alt="avatar"
                                             className="rounded-full sm:h-12 sm:w-12 mr-2"/></a></div>
                 </div>
 
