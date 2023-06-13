@@ -55,7 +55,7 @@ export default function PostPage({ params: { id }}: { params: { id: string }}) {
     
     return user && (
         <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-            <DashboardLeftBar />
+            <DashboardLeftBar inputRef={undefined} />
             <div className="w-full lg:w-1/2  mb-4 border-x-2">
         <svg
         onClick={handleClose} 

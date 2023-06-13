@@ -1,19 +1,15 @@
 'use client';
 
 import Image from "next/image";
-import {useEffect, useState, ChangeEvent, FormEvent, MouseEvent} from "react";
-import {account, databases, storage} from "#/lib/appwriteConfig";
-import {ID, Query, Models} from "appwrite";
+import {useEffect, useState, ChangeEvent, useRef} from "react";
+import { databases, storage } from "#/lib/appwriteConfig";
+import { ID, Query, Models } from "appwrite";
 import Post from "#/ui/post";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardLeftBar from "#/ui/dashboard-left-bar";
 
-import Navbar from "#/ui/navbar";
-import Modal from "./modal";
 import DashboardRightBar from "./dashboard-right-bar";
-
-
 
 // once new post submitted -> new bucket get created -> file uploaded to that bucket -> update posts state in this component with the url
 
@@ -26,6 +22,9 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     const [posts, setPosts] = useState<Models.Document[] | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [currentUser, setCurrentUser] = useState<Models.Document | null>(null)
+
+    const inputRef = useRef(null);
+
 
 
     async function likePost(postId: string, userId: string | undefined) {
@@ -169,7 +168,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
     </div>
 
     <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-        <DashboardLeftBar/>
+        <DashboardLeftBar inputRef={inputRef}/>
 
         <div className="w-full lg:w-1/2  mb-4 border-x-2">
         <div className="flex">
@@ -194,6 +193,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
                     </div>
                     <div className="flex-1 px-2 pt-2 mt-2">
                         <textarea 
+                        ref={inputRef}
                         name="content_body"
                         value={content}
                         onChange={contentChanges}

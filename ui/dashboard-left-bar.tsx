@@ -3,10 +3,17 @@
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
+import { MutableRefObject } from "react";
 
 
-export default function DashboardLeftBar() {
+export default function DashboardLeftBar({inputRef}: {inputRef: any}) {
   const pathname = usePathname()
+
+  const handleClick = () => {
+    if (pathname === '/dashboard') {
+      inputRef ?? inputRef.current.focus()
+    }
+  }
 
     return (
         <div className="w-full lg:w-1/4 pl-4 lg:pl-0 pr-6 mt-8 mb-4">
@@ -53,7 +60,9 @@ export default function DashboardLeftBar() {
                   More
                 </Link>
                 
-                <button className="bg-blue-400 text-white w-48 mt-5 hover:bg-blue-500 text-slate-900 font-bold py-2 px-4 rounded-full">
+                <button
+                onClick={() => inputRef.current.focus()} 
+                className="bg-blue-400 text-white w-48 mt-5 hover:bg-blue-500 text-slate-900 font-bold py-2 px-4 rounded-full">
                 Tweet
               </button>
           </nav>
