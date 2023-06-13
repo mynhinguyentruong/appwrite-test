@@ -183,11 +183,11 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
                     </div>
                 </div>
                 <hr className="border-gray-300"/>
-            <div className="w-7/8 p-3 pl-0 ">
+            <div className=" p-3 pl-0 ">
                 {/* change */}
            
                 {/* <!--middle creat tweet--> */}
-                <div className="flex">
+                <div className="flex w-full">
                     <div className="m-2 w-10 py-1">
                         <Image width={40} height={40} className="inline-block h-10 w-10 rounded-full" src={currentUser?.user_image} alt="" />
                     </div>
