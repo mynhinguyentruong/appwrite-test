@@ -2,12 +2,17 @@
 
 import DashboardLeftBar from "#/ui/dashboard-left-bar"
 import Image from "next/image"
+import { useContext } from "react"
 import useSWR from 'swr'
+import { UserContext } from "../user-provider"
 
 const fetcher = (endpoint: string) => fetch(endpoint).then(res => res.json())
 
 export default function MediaPage() {
     const {data, error, isLoading} = useSWR('/api/get-files', fetcher)
+    const context = useContext(UserContext)
+    console.log({context});
+    
 
     return (
         <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">

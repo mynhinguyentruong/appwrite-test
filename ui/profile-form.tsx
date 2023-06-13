@@ -1,7 +1,13 @@
-
+'use client'
+import { UserContext } from '#/app/user-provider'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { useContext } from 'react'
 
 export default function ProfileForm() {
+    const context = useContext(UserContext)
+    console.log(context);
+    
+    
     return (
         <form>
             <div className="space-y-12 px-5 py-5">

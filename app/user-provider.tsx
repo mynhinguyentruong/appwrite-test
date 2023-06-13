@@ -5,9 +5,9 @@ import { Models } from "appwrite"
 
 import { ReactNode, createContext, useEffect, useState } from "react"
 
-const UserContext = createContext<null | User>(null)
+export const UserContext = createContext<null | User>(null)
 
-type User = {
+export type User = {
     user: Models.User<Models.Preferences> | null
 }
 
