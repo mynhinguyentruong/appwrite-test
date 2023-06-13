@@ -1,6 +1,6 @@
 'use client'
+
 import DashboardLeftBar from "#/ui/dashboard-left-bar"
-import Dog from "#/public/dog_one.jpg"
 import Image from "next/image"
 import useSWR from 'swr'
 
@@ -11,7 +11,7 @@ export default function MediaPage() {
 
     return (
         <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
-            <DashboardLeftBar />
+            <DashboardLeftBar inputRef={undefined} />
             <div className="w-full  mb-4 border-l-2">
                 <div className="flex">
                     <div className="flex-1 m-2">
