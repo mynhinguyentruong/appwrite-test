@@ -4,21 +4,24 @@ import Image from "next/image"
 import Link from "next/link"
 import DashboardLeftBar from "#/ui/dashboard-left-bar"
 import DashboardRightBar from "#/ui/dashboard-right-bar"
-import { useEffect, useState, useCallback, ChangeEvent } from "react"
+import { useEffect, useState, useCallback, ChangeEvent, useContext } from "react"
 import { account } from "#/lib/appwriteConfig"
 import { Models } from "appwrite"
 import useSWR from 'swr'
 import { useRouter } from "next/navigation"
+import { UserContext } from "#/app/user-provider"
 
 const fetcher = (endpoint: string) => fetch(endpoint).then(res => res.json())
 
 
 export default function PostPage({ params: { id }}: { params: { id: string }}) {
-    const [currentUser, setCurrentUser] = useState<Models.User<Models.Preferences> | null>(null)
+    // const [currentUser, setCurrentUser] = useState<Models.User<Models.Preferences> | null>(null)
     const [content, setContent] = useState("")
+    const context = useContext(UserContext)
 
     const { data: post, error, isLoading } = useSWR(`/api/post?id=${id}`, fetcher)
     const { data: user, error: userError, isLoading: userIsLoading } = useSWR(`/api/user?userId=${post?.user_id}`, fetcher)
+    const { data: currentUser, error: currentUserError, isLoading: currentUserIsLoading} = useSWR(`/api/user?userId=${context?.user?.$id}`, fetcher)
 
     console.log({user});
     
@@ -37,21 +40,21 @@ export default function PostPage({ params: { id }}: { params: { id: string }}) {
         setContent(e.target.value)
     }
 
-    useEffect(() => {
-        const promise = account.get()
-            promise
-                .then(function (response) {
-                    console.log("Success getting session")
-                    console.log(response); // Success
-                    // Permission.write(Role.user(response.$id, 'verified'))
-                    setCurrentUser(response)
-                })
-                .catch(error => {
-                    console.log("Error while trying to get session")
-                    console.log({error})
+    // useEffect(() => {
+    //     const promise = account.get()
+    //         promise
+    //             .then(function (response) {
+    //                 console.log("Success getting session")
+    //                 console.log(response); // Success
+    //                 // Permission.write(Role.user(response.$id, 'verified'))
+    //                 setCurrentUser(response)
+    //             })
+    //             .catch(error => {
+    //                 console.log("Error while trying to get session")
+    //                 console.log({error})
 
-                });
-    }, [])
+    //             });
+    // }, [])
     
     return user && (
         <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
@@ -70,8 +73,8 @@ export default function PostPage({ params: { id }}: { params: { id: string }}) {
                 
                 <div className="w-1/8  pl-3 pt-3 ">
                     <div><a href="#"><Image width={30} height={30}
-                                            src={user.image_url ? user.image_url : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} alt="avatar"
-                                            className="rounded-full sm:h-12 sm:w-12 mr-2"/></a></div>
+                                            src={user.user_image ? user.user_image : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} alt="avatar"
+                                            className="rounded-full sm:h-12 sm:w-12 mr-2 p-1"/></a></div>
                 </div>
 
                 <div className="w-7/8 p-3 pl-0 ">
@@ -135,7 +138,7 @@ export default function PostPage({ params: { id }}: { params: { id: string }}) {
         {/* change */}
         <div className="flex">
                     <div className="m-2 w-10 py-1">
-                        {/* <Image width={40} height={40} className="inline-block h-10 w-10 rounded-full" src={owner?.user_image} alt="" /> */}
+                        <Image width={40} height={40} className="inline-block h-10 w-10 rounded-full" src={currentUser?.user_image} alt="" />
                     </div>
                     <div className="flex-1 px-2 pt-2 mt-2">
                         <textarea 
