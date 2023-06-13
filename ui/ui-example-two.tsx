@@ -66,7 +66,7 @@ export default function UiExampleTwo ({ user }: {user: Models.User<Models.Prefer
 
         toast('Post sent successfully ', {
             position: "top-center",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
