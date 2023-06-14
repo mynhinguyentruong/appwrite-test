@@ -26,3 +26,5 @@ export async function GET(request: Request) {
 
   return NextResponse.json(imageUrls);
 }
+
+export const revalidate = 60;
