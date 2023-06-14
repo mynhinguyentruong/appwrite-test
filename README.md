@@ -1,7 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
-
+## Hashnode Article
+Checkout full details of the project here on [`Hashnode`](https://nhi.hashnode.dev/building-a-social-networking-web-application-with-real-time-features-using-appwrite)
 First, run the development server:
 
 ```bash
