@@ -33,14 +33,19 @@ export default function Page({params}: {params: IParams} ) {
                     console.log("New session created: ")
                     console.log(response); // Success
                     const {userId, $id} = response
-    
-                    const newUserPromise = databases.createDocument('647b675e73a83b821ca7', '647cb553d054c55d41db', ID.unique(), {
-                            user_id: userId,
-                            user_handle: "handle",
-                            user_name: "username"
-                        })
-                        newUserPromise.then(res => console.log(res)).catch(error => console.log({error}))
-                
+
+                    fetch(`/api/user?userId=${userId}`)
+                        .then(res => {
+                            if (res.status === 404) {
+                                const newUserPromise = databases.createDocument('647b675e73a83b821ca7', '647cb553d054c55d41db', ID.unique(), {
+                                    user_id: userId,
+                                    user_handle: "handle",
+                                    user_name: "username"
+                                })
+                                newUserPromise.then(res => console.log(res)).catch(error => console.log({error}))
+                            }
+                            })
+                        .catch(err => console.log(err))
 
                     console.log({userId} )
                     setIsAuthenticated(true)
