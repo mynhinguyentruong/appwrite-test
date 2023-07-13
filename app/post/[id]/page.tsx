@@ -1,12 +1,10 @@
 'use client'
 
 import Image from "next/image"
-import Link from "next/link"
 import DashboardLeftBar from "#/ui/dashboard-left-bar"
 import DashboardRightBar from "#/ui/dashboard-right-bar"
-import { useEffect, useState, useCallback, ChangeEvent, useContext } from "react"
-import { account } from "#/lib/appwriteConfig"
-import { Models } from "appwrite"
+import { useState, useCallback, ChangeEvent, useContext } from "react"
+
 import useSWR from 'swr'
 import { useRouter } from "next/navigation"
 import { UserContext } from "#/app/user-provider"
@@ -39,22 +37,6 @@ export default function PostPage({ params: { id }}: { params: { id: string }}) {
     function contentChanges(e: ChangeEvent<HTMLTextAreaElement>) {
         setContent(e.target.value)
     }
-
-    // useEffect(() => {
-    //     const promise = account.get()
-    //         promise
-    //             .then(function (response) {
-    //                 console.log("Success getting session")
-    //                 console.log(response); // Success
-    //                 // Permission.write(Role.user(response.$id, 'verified'))
-    //                 setCurrentUser(response)
-    //             })
-    //             .catch(error => {
-    //                 console.log("Error while trying to get session")
-    //                 console.log({error})
-
-    //             });
-    // }, [])
     
     return user && (
         <div className="container mx-auto flex flex-col lg:flex-row mt-3 text-sm leading-normal">
