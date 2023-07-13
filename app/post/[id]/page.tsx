@@ -1,4 +1,4 @@
-import { getPost } from "#/lib/appwrite/getImageLink";
+import { getPost } from "#/lib/appwrite/appwriteMethods";
 import PostPage from "./postpage";
 
 
