@@ -1,6 +1,6 @@
 import config from "../appwriteConfigServer";
 
-const { storage } = config;
+const { storage, databases } = config;
 
 export async function getImageLink() {
   const bucketsData = await storage.listBuckets();
@@ -16,4 +16,14 @@ export async function getImageLink() {
   }
 
   return imageUrls;
+}
+
+export async function getPost(id: string) {
+  const post = await databases.getDocument(
+    process.env.DATABASE_ID as string,
+    process.env.POST_COLLECTION_ID as string,
+    id as string
+  );
+
+  return post;
 }
