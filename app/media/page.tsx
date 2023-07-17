@@ -1,6 +1,6 @@
 // Server Component
 
-import { getImageLink } from "#/lib/appwrite/getImageLink"
+import { getImageLink } from "#/lib/appwrite/appwriteMethods"
 import DashboardLeftBar from "#/ui/dashboard-left-bar"
 import Image from "next/image"
 

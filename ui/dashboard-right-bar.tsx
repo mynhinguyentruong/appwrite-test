@@ -1,12 +1,16 @@
+// TODO: Moving this component to server component
+
+// Move the dashboard page to server
+
 import Image from "next/image";
 import Dog from '#/public/dog_one.jpg';
 import Link from "next/link";
-import useSWR from "swr"
+import { getImageLink } from "#/lib/appwrite/appwriteMethods"
 
-const fetcher = (endpoint: string) => fetch(endpoint).then(res => res.json())
 
 export default function DashboardRightBar() {
-    const {data, error, isLoading} = useSWR('/api/get-files', fetcher)
+//   const data = await getImageLink()
+    const data: string[] = []
 
     return (
         <div className="w-full lg:w-1/4 pl-4 ">
