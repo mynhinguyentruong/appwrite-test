@@ -40,3 +40,5 @@ export default async function MediaPage() {
         </div>
     )
 }
+
+export const revalidate = 60

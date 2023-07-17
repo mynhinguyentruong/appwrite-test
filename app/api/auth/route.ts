@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   return new Response("Set Cookies Success!", {
     status: 200,
     headers: {
-      "Set-Cookie": `${searchParams.toString()}; SameSite=Strict; HttpOnly`,
+      "Set-Cookie": `${searchParams.toString()}; SameSite=Strict; HttpOnly; Secure`,
     },
   });
 }
